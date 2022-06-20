@@ -1,9 +1,15 @@
 #!/bin/bash
+set -ex
 
-flatpak install flathub com.spotify.Client
-flatpak install flathub org.ferdium.Ferdium
-flatpak install flathub org.telegram.desktop
-flatpak install flathub com.discordapp.Discord
-flatpak install flathub com.valvesoftware.Steam
-flatpak install flathub com.mattjakeman.ExtensionManager
-flatpak install flathub org.gnome.Extensions
+flatpkgs=(
+com.spotify.Client 
+org.ferdium.Ferdium
+org.telegram.desktop
+com.discordapp.Discord
+com.valvesoftware.Steam
+com.mattjakeman.ExtensionManager
+org.gnome.Extensions
+)
+
+flatpak install -y --noninteractive flathub "${flatpkgs[@]}"
+
