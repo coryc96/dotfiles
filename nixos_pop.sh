@@ -14,7 +14,7 @@ nixos.distrobox
 nixos.remmina
 )
 
-mkdir -p ~/.config/nixpkgs/config.nix
+mkdir -p ~/.config/nixpkgs/
 cp nix/config.nix ~/.config/nixpkgs/config.nix
 
 nix-env --install --attr "${NIXPKGS[@]}"
