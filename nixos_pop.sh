@@ -9,6 +9,7 @@ nixos.gnome-text-editor
 nixos.git
 nixos.python3
 nixos.rustup
+nixos.podman
 nixos.distrobox
 nixos.remmina
 )
