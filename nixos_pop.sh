@@ -21,7 +21,7 @@ nix-env --install --attr "${NIXPKGS[@]}"
 
 flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
 
-flatpak install flatpak.sh
+sh flatpak.sh
 
 if [ ! -d "${HOME}/Projects/pop" ]
 then
