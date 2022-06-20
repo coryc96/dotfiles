@@ -69,4 +69,8 @@ popd
 
 cat dconf | dconf load /
 
+mkdir -p ~/Scripts/
+cp switch_audio.sh ~/Scripts
+cp launch_rdp.sh ~/Scripts
+
 echo "Setup complete. Reboot if this is the first time."
