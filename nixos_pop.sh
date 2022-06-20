@@ -10,11 +10,14 @@ nixos.git
 nixos.python3
 nixos.rustup
 nixos.distrobox
+nixos.remmina
 )
 
 nix-env --install --attr "${NIXPKGS[@]}"
 
 flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
+
+flatpak install flatpak.sh
 
 if [ ! -d "${HOME}/Projects/pop" ]
 then
