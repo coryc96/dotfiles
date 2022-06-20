@@ -14,6 +14,9 @@ nixos.distrobox
 nixos.remmina
 )
 
+mkdir -p ~/.config/nixpkgs/config.nix
+cp nix/config.nix ~/.config/nixpkgs/config.nix
+
 nix-env --install --attr "${NIXPKGS[@]}"
 
 flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
