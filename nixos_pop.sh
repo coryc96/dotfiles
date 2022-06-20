@@ -6,6 +6,7 @@ NIXPKGS=(
 nixos.firefox
 nixos.spotify
 nixos.gnome-text-editor
+nixos.gnome.gnome-tweaks
 nixos.git
 nixos.python3
 nixos.rustup
