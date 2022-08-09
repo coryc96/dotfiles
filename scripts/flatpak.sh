@@ -9,6 +9,7 @@ com.discordapp.Discord
 com.valvesoftware.Steam
 com.mattjakeman.ExtensionManager
 org.gnome.Extensions
+com.github.tchx84.Flatseal
 )
 
 flatpak install -y --noninteractive flathub "${flatpkgs[@]}"
