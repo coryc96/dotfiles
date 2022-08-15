@@ -7,3 +7,5 @@ export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/
 
 # install HM
 nix-shell '<home-manager>' -A install
+
+mkdir -p ~/.config/nixpkgs
