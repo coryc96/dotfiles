@@ -1,4 +1,3 @@
-
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -12,11 +11,11 @@
     ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "labhost"; # Define your hostname.
+  networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -25,20 +24,26 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  
+  services.mullvad-vpn.enable
 
   # Set your time zone.
   time.timeZone = "America/New_York";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";
-  
-  services.flatpak.enable = true;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # Enable the Pantheon Desktop Environment.
+  
+  # Enable the Gnome Desktop
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  
+  services.xserver.displayManager.gdm.wayland = true;
+  
+  #Enable the KDE Desktop
+  #services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -78,12 +83,20 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.opengl.enable = true;
+  
+  hardware.nvidia.modesetting.enable = true;
+
+  # Optionally, you may need to select the appropriate driver version for your specific GPU.
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -95,7 +108,9 @@
   # };
 
   # List services that you want to enable:
-  virtualisation.virtualbox.guest.enable = true;
+  
+  services.flatpak.enable = true;
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
@@ -107,10 +122,18 @@
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leavecatenate(variables, "bootdev", bootdev)
+  # on your system were taken. It‘s perfectly fine and recommended to leave
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
+  
+  ## Garbage Collector
+  
+  nix.gc = {
+    automatic = true;  # Enable the automatic garbage collector
+    dates = "04:00";   # When to run the garbage collector
+    options = "-d";    # Arguments to pass to nix-collect-garbage
+};
 
 }
