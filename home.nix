@@ -9,7 +9,6 @@
   # Packages that should be installed to the user profile.
   home.packages = [
     pkgs.thunderbird
-    pkgs.firefox
     pkgs.gparted
     pkgs.gnome-text-editor
     pkgs.podman
@@ -18,9 +17,27 @@
     pkgs.tilix
     pkgs.vscodium
     pkgs.remmina
+    pkgs.gnomeExtensions.user-themes
+    pkgs.gnomeExtensions.dash-to-panel
+    pkgs.gnomeExtensions.sound-output-device-chooser
+    pkgs.git
+    pkgs.mullvad-vpn
+    pkgs.firefox
+    pkgs.lutris
+    pkgs.retroarch
   ];
   
-  ## DCONF SETTINGS ##
+  ## THEMES ##
+  
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Qogir-Dark";
+      package = pkgs.qogir-theme;
+    };
+  };
+  
+  ## DCONF SETTINGS ##  
   
   dconf.settings = {
   "org/gnome/settings-daemon/plugins/media-keys" = {
