@@ -15,7 +15,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "corypc"; # Define your hostname.
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -25,7 +26,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
   
-  services.mullvad-vpn.enable
+  services.mullvad-vpn.enable = true;
+  
+  services.openssh.enable=true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -35,12 +38,11 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.displayManager.gdm.wayland = true;
   
   # Enable the Gnome Desktop
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  
-  services.xserver.displayManager.gdm.wayland = true;
   
   #Enable the KDE Desktop
   #services.xserver.desktopManager.plasma5.enable = true;
@@ -88,6 +90,8 @@
   hardware.opengl.enable = true;
   
   hardware.nvidia.modesetting.enable = true;
+  
+  hardware.i2c.enable = true;
 
   # Optionally, you may need to select the appropriate driver version for your specific GPU.
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -97,8 +101,12 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
+    gnome.gnome-software
+    ddcutil # Used for monitor input control
   ];
-
+  # Fix Steam Issues
+  hardware.opengl.driSupport32Bit = true;
+  
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -110,6 +118,9 @@
   # List services that you want to enable:
   
   services.flatpak.enable = true;
+  xdg.portal.enable = true;
+  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-kde ];
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
@@ -127,6 +138,9 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
+  
+  ## Auto-Upgrade
+  system.autoUpgrade.enable = true;
   
   ## Garbage Collector
   

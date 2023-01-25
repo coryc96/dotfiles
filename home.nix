@@ -8,6 +8,10 @@
   
   # Packages that should be installed to the user profile.
   home.packages = [
+    pkgs.syncthing
+    pkgs.kubectl
+    pkgs.vivaldi
+    pkgs.airshipper
     pkgs.thunderbird
     pkgs.gparted
     pkgs.gnome-text-editor
@@ -15,7 +19,6 @@
     pkgs.distrobox
     pkgs.gnome.gnome-tweaks
     pkgs.tilix
-    pkgs.vscodium
     pkgs.remmina
     pkgs.gnomeExtensions.user-themes
     pkgs.gnomeExtensions.dash-to-panel
@@ -25,6 +28,9 @@
     pkgs.firefox
     pkgs.lutris
     pkgs.retroarch
+    pkgs.vscode
+    pkgs.p7zip
+    pkgs.steam
   ];
   
   ## THEMES ##
