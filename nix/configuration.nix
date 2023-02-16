@@ -42,10 +42,10 @@
   
   # Enable the Gnome Desktop
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true;
   
   #Enable the KDE Desktop
-  #services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -103,7 +103,14 @@
     wget
     gnome.gnome-software
     ddcutil # Used for monitor input control
+    xorg.xrandr
   ];
+
+  # ZSH
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
+  environment.shells = with pkgs; [zsh];
+
   # Fix Steam Issues
   hardware.opengl.driSupport32Bit = true;
   
@@ -131,6 +138,16 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+    networking.firewall = { 
+    enable = true;
+    allowedTCPPortRanges = [ 
+      { from = 1714; to = 1764; } # KDE Connect
+    ];  
+    allowedUDPPortRanges = [ 
+      { from = 1714; to = 1764; } # KDE Connect
+    ];  
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -142,6 +159,9 @@
   ## Auto-Upgrade
   system.autoUpgrade.enable = true;
   
+  ## Flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   ## Garbage Collector
   
   nix.gc = {

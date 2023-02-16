@@ -8,31 +8,99 @@
   
   # Packages that should be installed to the user profile.
   home.packages = [
-    pkgs.syncthing
-    pkgs.kubectl
-    pkgs.vivaldi
-    pkgs.airshipper
-    pkgs.thunderbird
-    pkgs.gparted
-    pkgs.gnome-text-editor
+    # Shell/Terminal/System
+    pkgs.tmux
+    pkgs.tilix
+    pkgs.zsh-powerlevel10k
+    pkgs.git
     pkgs.podman
     pkgs.distrobox
+    pkgs.bash-completion
+    pkgs.kubectl
+    pkgs.kubernetes-helm-wrapped
+    pkgs.openjdk17-bootstrap
+    # Desktop Software
+    pkgs.gnome-text-editor
     pkgs.gnome.gnome-tweaks
-    pkgs.tilix
+    pkgs.gparted
+    pkgs.keepassxc
+    pkgs.firefox
+    pkgs.syncthing
+    pkgs.gnome.cheese
     pkgs.remmina
+    pkgs.gimp
     pkgs.gnomeExtensions.user-themes
     pkgs.gnomeExtensions.dash-to-panel
     pkgs.gnomeExtensions.sound-output-device-chooser
-    pkgs.git
+    pkgs.libsForQt5.kdeconnect-kde
     pkgs.mullvad-vpn
-    pkgs.firefox
-    pkgs.lutris
-    pkgs.retroarch
+    # Optional Software
+    pkgs.airshipper
+    pkgs.tdesktop # telegram
+    pkgs.vivaldi
+    pkgs.discord
     pkgs.vscode
     pkgs.p7zip
+    # Games
+    pkgs.lutris
+    pkgs.retroarch
+    pkgs.prismlauncher
+    pkgs.xonotic
     pkgs.steam
   ];
-  
+
+  # GIT
+  programs.git = {
+    enable = true;
+    userName = "Cory Chambers";
+    userEmail = "corychambers96@gmail.com";
+  };
+
+  # VIM
+  programs.vim = {
+    enable = true;
+    plugins = with pkgs.vimPlugins; [ vim-nix ];
+    settings = { ignorecase = true; };
+    }; 
+
+
+  # ZSH
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableSyntaxHighlighting = true;
+    shellAliases = {
+
+      k = "kubectl";
+      cerberos = "export KUBECONFIG=/home/coryc/Documents/k8s/cerberos.yaml";
+      rancher = "export KUBECONFIG=/home/coryc/Documents/k8s/rancher.yaml";
+      infrastructure = "export KUBECONFIG=/home/coryc/Documents/k8s/infrastructure.yaml";
+
+      nix-home = "vim ~/Documents/NixOS/home.nix";
+      nix-config = "sudo vim ~/Documents/NixOS/configuration.nix";
+
+    };
+    history = {
+      size = 10000;
+      path = "${config.xdg.dataHome}/zsh/history";
+    };
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "powerlevel10k-config";
+        src = "/home/coryc/.p10k-config";
+        file = ".p10k.zsh";
+      }  
+    ];
+    oh-my-zsh = {
+      enable = true;
+      plugins = ["git"];
+    };
+};
   ## THEMES ##
   
   gtk = {
