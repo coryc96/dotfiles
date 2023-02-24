@@ -19,10 +19,11 @@
     # COME BACK TO THIS
   };
 
-  programs.gh = {
-    enable = true;
-    enableGitCredentialHelper = true;  
-  };
+#  programs.gh = {
+#    enable = true;
+#    enableGitCredentialHelper = true;  
+#  };
+
   # VIM
   programs.vim = {
     enable = true;
