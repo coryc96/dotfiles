@@ -1,0 +1,1 @@
+/home/coryc/.config/nixpkgs/configs/sway.nix
