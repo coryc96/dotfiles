@@ -66,7 +66,7 @@
       }
       {
         name = "powerlevel10k-config";
-        src = "/home/coryc/.p10k-config";
+        src = "/home/coryc/.zsh/plugins/powerlevel10k-config/";
         file = ".p10k.zsh";
       }  
     ];
@@ -97,88 +97,6 @@
     };
   };
 
-# SWAY
-#  wayland.windowManager.sway = {
-#    enable = true;
-#    extraOptions = [
-#      "--unsupported-gpu"
-#    ];
-#    wrapperFeatures = {
-#      gtk = true;
-#    };
-#    extraSessionCommands = ''
-#      export WLR_NO_HARDWARE_CURSORS=1
-#      export WLR_RENDERER=vulkan
-#      '';
-#    xwayland = true;
-#   # extraSessionCommands = ''
-#   #   export WLR_NO_HARDWARE_CURSORS=1
-#   #   export SDL_VIDEODRIVER=wayland
-#   #   # needs qt5.qtwayland in systemPackages
-#   #   export QT_QPA_PLATFORM=wayland
-#   #   export QT_AUTO_SCREEN_SCALE_FACTOR=1
-#   #   export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-#   #   # Fix for some Java AWT applications (e.g. Android Studio),
-#   #   # use this if they aren't displayed properly:
-#   #   export _JAVA_AWT_WM_NONREPARENTING=1
-#   #   export GDK_BACKEND=wayland
-#   #   export XDG_CURRENT_DESKTOP=sway
-#   #   export GBM_BACKEND=nvidia-drm
-#   #   export __GLX_VENDOR_LIBRARY_NAME=nvidia
-#   #   export MOZ_ENABLE_WAYLAND=1
-#   #   '';
-#    config = rec {
-#      output = {
-#      
-#        DP-3 = {
-#          mode = "3440x1440@144Hz";
-#          position = "0 0";
-#        };
-#      
-#      };
-#      modifier = "Mod4";
-#      menu = "fuzzel --show run";
-#      # Use kitty as default terminal
-#      bars = [{
-#        command = "waybar";
-#      }];
-#      terminal = "alacritty";
-#      fonts =
-#      {
-#        names = [ "DejaVu Sans Mono" "FontAwesome5Free" ];
-#        style = "Bold Semi-Condensed";
-#        size = 11.0;
-#      }; 
-#      startup = [
-#        # Launch Firefox on start
-#        {command = "alacritty";}
-#      ];
-#    };
-#    extraConfig = ''
-#      # Notification Center
-#      exec swaync
-#      bindsym Mod4+Shift+n exec 'swaync-client -t -sw'
-#      
-#      # Media
-#      bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +5%'
-#      bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -5%'
-#      bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
-#      bindsym Mod4+Shift+XF86AudioMute exec "bash $HOME/Scripts/switch_sink.sh"
-#      
-#      bindsym XF86AudioPlay exec 'playerctl play-pause'
-#      bindsym XF86AudioPrev exec 'playerctl previous'
-#      bindsym XF86AudioNext exec 'playerctl next'
-#    '';
-#  };
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
   home.stateVersion = "22.05";
 
   # Let Home Manager install and manage itself.
