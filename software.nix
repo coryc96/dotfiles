@@ -8,7 +8,6 @@
     tilix
     zsh-powerlevel10k
     git
-    gh
     podman
     distrobox
     bash-completion
