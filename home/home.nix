@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 {
-
   imports = [
-    ./software.nix
-    ./configs/sway.nix
+    ../modules/desktop/sway/home.nix
+    ../modules/desktop/hyprland/home.nix
+    ../modules/desktop/software/home.nix
   ];
 
   # Home Manager needs a bit of information about you and the
@@ -44,10 +44,10 @@
       rancher = "export KUBECONFIG=$HOME/Documents/k8s/rancher.yaml";
       infrastructure = "export KUBECONFIG=$HOME/Documents/k8s/infrastructure.yaml";
 
-      nix-home = "vim $dotfiles/home.nix";
-      nix-config = "sudo vim $dotfiles/nix/configuration.nix";
-      nix-software = "vim $dotfiles/software.nix";
-      nix-sway = "vim $dotfiles/configs/sway.nix";
+      nix-home = "vim $dotfiles/home/home.nix";
+      nix-config = "sudo vim $dotfiles/hosts/desktop/configuration.nix";
+      nix-software = "vim $dotfiles/modules/desktop/software/home.nix";
+      nix-sway = "vim $dotfiles/modules/sway/home.nix";
 
     };
     localVariables = {
@@ -66,7 +66,7 @@
       }
       {
         name = "powerlevel10k-config";
-        src = "/home/coryc/.zsh/plugins/powerlevel10k-config/";
+        src = "/home/coryc/dotfiles/configs/zsh/powerlevel10k-config/";
         file = ".p10k.zsh";
       }  
     ];

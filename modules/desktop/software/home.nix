@@ -15,8 +15,10 @@
     kubernetes-helm-wrapped
     openjdk17-bootstrap
     pulseaudio
-   # Desktop Software
+    # Desktop Software
+    xfce.thunar
     gnome-text-editor
+    gnome.gnome-disk-utility
     gnome.gnome-tweaks
     gparted
     keepassxc
@@ -46,7 +48,8 @@
     xonotic
     zeroad
     steam
-    # SWAY
+    # Wayland
+    hyprpaper
     swaynotificationcenter
     pango
     swayidle
@@ -54,10 +57,26 @@
     alacritty
     waybar
     fuzzel
+    wofi
     wdisplays
     playerctl
-  ];
+    # Custom Desktop Entries
+    ferdium
+    discord
   
+  ];
+
+  xdg.desktopEntries = 
+    {
+      ferdium = {
+        name = "Ferdium";
+        exec = "ferdium --enable-features=UseOzonePlatform --ozone-platform=wayland";
+      };
+      discord = {
+        name = "Discord";
+        exec = "discord --no-sandbox";      
+      };
+    };
 
   nixpkgs.config.allowUnfree = true;
 

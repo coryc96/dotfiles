@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 {
+
+  home.sessionVariables.NIXOS_OZONE_WL = "1";
+
 # SWAY
   wayland.windowManager.sway = {
     enable = true;
@@ -11,36 +14,23 @@
     };
     extraSessionCommands = ''
       export WLR_NO_HARDWARE_CURSORS=1
+      export WLR_RENDERER=vulkan
       export xwayland=true
       export SDL_VIDEODRIVER=wayland
       export XDG_SESSION_TYPE=wayland
       export GBM_BACKEND=nvidia-drm
       export GDK_BACKEND=wayland
+      export __GLX_VENDOR_LIBRARY_NAME=nvidia
+      export QT_QPA_PLATFORM=wayland
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+      export MOZ_ENABLE_WAYLAND=1
       '';
-   # extraSessionCommands = ''
-   #   export WLR_NO_HARDWARE_CURSORS=1
-   #   export SDL_VIDEODRIVER=wayland
-   #   # needs qt5.qtwayland in systemPackages
-   #   export QT_QPA_PLATFORM=wayland
-   #   export QT_AUTO_SCREEN_SCALE_FACTOR=1
-   #   export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-   #   # Fix for some Java AWT applications (e.g. Android Studio),
-   #   # use this if they aren't displayed properly:
-   #   export _JAVA_AWT_WM_NONREPARENTING=1
-   #   export GDK_BACKEND=wayland
-   #   export XDG_CURRENT_DESKTOP=sway
-   #   export GBM_BACKEND=nvidia-drm
-   #   export __GLX_VENDOR_LIBRARY_NAME=nvidia
-   #   export MOZ_ENABLE_WAYLAND=1
-   #   '';
     config = rec {
       output = {
-      
         DP-3 = {
           mode = "3440x1440@144Hz";
           position = "0 0";
         };
-      
       };
       modifier = "Mod4";
       menu = "fuzzel --show run";
@@ -72,6 +62,7 @@
       startup = [
         # Launch Firefox on start
         {command = "alacritty";}
+        {command = "kdeconnect-app";}
       ];
     };
     extraConfig = ''
@@ -89,5 +80,37 @@
       bindsym XF86AudioPrev exec 'playerctl previous'
       bindsym XF86AudioNext exec 'playerctl next'
     '';
+  };
+
+  # WAYBAR
+  programs.waybar = {
+    enable = true;
+#    settings = [
+#      {
+#        mainBar = {
+#          layer = "top";
+#          position = "top";
+#          height = "30";
+#          modules-left = [ "sway/workspaces" "sway/mode" "wlr/taskbar" ];
+#          modules-center = [ "sway/window" ];
+#          modules-right = [ "mpd" "tray" ];
+#        };
+#      }
+#    ];
+#    style = '/home/coryc/dotfiles/waybar/style.css'';
+#      * {
+#        border: none;
+#        border-radius: 10;
+#        font-family: Source Code Pro;
+#      }
+#      window#waybar {
+#        background: #16191C;
+#        color: #AAB2BF;
+#      }
+#      #workspaces button {
+#        padding: 0 5px;
+#      }  
+#    '';
+    systemd.enable = true;
   };
 }
