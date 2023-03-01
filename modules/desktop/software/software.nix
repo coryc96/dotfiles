@@ -6,6 +6,7 @@
     # Shell/Terminal/System
     tmux
     tilix
+    ranger
     zsh-powerlevel10k
     git
     podman
@@ -15,10 +16,16 @@
     kubernetes-helm-wrapped
     openjdk17-bootstrap
     pulseaudio
+    wireplumber
+    pavucontrol
+    binutils
+    libsForQt5.index
+    libsForQt5.polkit-kde-agent
+    libsForQt5.qt5.qtwayland
+
     # Desktop Software
     xfce.thunar
     gnome-text-editor
-    gnome.gnome-disk-utility
     gnome.gnome-tweaks
     gparted
     keepassxc
@@ -49,14 +56,16 @@
     zeroad
     steam
     # Wayland
-    hyprpaper
+    greetd.greetd
     swaynotificationcenter
+    grim
+    slurp
     pango
     swayidle
+    swaylock-effects
     wl-clipboard
     alacritty
     waybar
-    fuzzel
     wofi
     wdisplays
     playerctl

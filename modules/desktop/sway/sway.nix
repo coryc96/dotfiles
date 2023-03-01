@@ -5,7 +5,7 @@
 
 # SWAY
   wayland.windowManager.sway = {
-    enable = true;
+    enable = false;
     extraOptions = [
       "--unsupported-gpu"
     ];

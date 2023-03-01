@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ../modules/desktop/sway/home.nix
-    ../modules/desktop/hyprland/home.nix
-    ../modules/desktop/software/home.nix
+    #~/dotfiles/modules/desktop/sway/sway.nix
+    ~/dotfiles/modules/desktop/hyprland/hyprland.nix
+    ~/dotfiles/modules/desktop/software/software.nix
   ];
 
   # Home Manager needs a bit of information about you and the
@@ -11,7 +11,7 @@
   home.username = "coryc";
   home.homeDirectory = "/home/coryc/";
   
-    # GIT
+  # GIT
   programs.git = {
     enable = true;
     userName = "Cory Chambers";
@@ -19,16 +19,14 @@
     # COME BACK TO THIS
   };
 
-#  programs.gh = {
-#    enable = true;
-#    enableGitCredentialHelper = true;  
-#  };
-
   # VIM
   programs.vim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [ vim-nix ];
     settings = { ignorecase = true; };
+    extraConfig = ''
+set number
+    '';
     }; 
 
 
@@ -44,10 +42,12 @@
       rancher = "export KUBECONFIG=$HOME/Documents/k8s/rancher.yaml";
       infrastructure = "export KUBECONFIG=$HOME/Documents/k8s/infrastructure.yaml";
 
-      nix-home = "vim $dotfiles/home/home.nix";
+      nix-home = "vim $dotfiles/home/desktop/home.nix";
       nix-config = "sudo vim $dotfiles/hosts/desktop/configuration.nix";
-      nix-software = "vim $dotfiles/modules/desktop/software/home.nix";
-      nix-sway = "vim $dotfiles/modules/sway/home.nix";
+      nix-software = "vim $dotfiles/modules/desktop/software/software.nix";
+      nix-sway = "vim $dotfiles/modules/desktop/sway/sway.nix";
+      nix-hypr = "vim $dotfiles/modules/desktop/hyprland/hyprland.nix";
+      nix-hypr-conf = "vim $dotfiles/modules/desktop/configs/hyprland/hyprland.conf";
 
     };
     localVariables = {
@@ -66,7 +66,7 @@
       }
       {
         name = "powerlevel10k-config";
-        src = "/home/coryc/dotfiles/configs/zsh/powerlevel10k-config/";
+        src = "/home/coryc/dotfiles/modules/desktop/configs/zsh/powerlevel10k-config/";
         file = ".p10k.zsh";
       }  
     ];
