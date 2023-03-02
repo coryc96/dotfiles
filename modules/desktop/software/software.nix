@@ -55,8 +55,9 @@
     xonotic
     zeroad
     steam
+
     # Wayland
-    greetd.greetd
+    rofi-wayland
     swaynotificationcenter
     grim
     slurp

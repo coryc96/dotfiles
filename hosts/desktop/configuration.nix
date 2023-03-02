@@ -9,6 +9,7 @@
   imports =
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    #/home/coryc/dotfiles/hosts/desktop/greetd.nix
     ];
 
   # Bootloader.
@@ -44,8 +45,38 @@
   # SwayLock PAM Auth
   security.pam.services.swaylock = {
         text = "auth include login";
-          };
+  };
 
+  services.greetd = {
+    enable = true;
+    restart = false;
+    settings = rec {
+      initial_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
+        user = "coryc";
+      };
+      default_session = initial_session;
+    };
+  };
+ 
+  # Enable SDDM for Hyprland
+  #services.xserver = {
+  #  enable = true;
+  #  displayManager = {
+  #    lightdm.enable = true;
+  #    autoLogin.enable = true;
+  #    autoLogin.user = "coryc";
+  #    defaultSession = "hyprland";
+  #    session = [
+  #      {
+  #        manage = "desktop";
+  #        name = "hyprland";
+  #        start = ''exec Hyprland'';
+  #      }
+  #    ];
+  #  };
+  #};
+   
   # Enable the X11 windowing system.
   #services.xserver.enable = true;
   #services.xserver.displayManager.gdm.wayland = true;
@@ -147,6 +178,7 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
+    mpd
     gnome.gnome-software
     gnome.gnome-disk-utility
     ddcutil # Used for monitor input control
@@ -154,14 +186,13 @@
     libsForQt5.qt5.qtwayland
     vulkan-validation-layers
 
-    # FOR SWAY
-    swaylock
+    # WAYLAND
     xdg-utils # for opening default programs when clicking links
     glib # gsettings
-    grim # screenshot functionality
-    slurp # screenshot functionality
   ];
 
+  programs.dconf.enable = true;
+  
   fonts = {
     fonts = with pkgs; [
       noto-fonts

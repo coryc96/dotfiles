@@ -1,0 +1,119 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passtrough": false,
+    "gtk-layer-shell": true,
+    "height": 0,
+    "modules-left": [
+        // "cpu",
+        // "memory",
+        // "wlr/taskbar",
+        "wlr/workspaces"
+    ],
+    "modules-center": ["hyprland/window"],
+    "modules-right": [
+        //"custom/updates",
+        // "custom/language",
+        //"mpd",
+        "mpris", 
+        "pulseaudio",
+        "pulseaudio#microphone",
+        "tray",
+        "clock"
+    ],
+
+    "hyprland/window": {
+        "format": "{}"
+    },
+    "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 14,
+    "icon-theme": "Numix-Circle",
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "ignore-list": [
+       "Alacritty"
+    ],
+    },
+    "wlr/workspaces": {
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "all-outputs": true,
+        "on-click": "activate",
+        "format": "{icon}",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "urgent": "",
+            "active": "",
+            "default": ""
+          }
+    },
+    // "cpu": {
+    //     "interval": 10,
+    //     "format": " {}%",
+    //     "max-length": 10,
+    //     "on-click": ""
+    // },
+    // "memory": {
+    //     "interval": 30,
+    //     "format": " {}%",
+    //     "format-alt":" {used:0.1f}G",
+    //     "max-length": 10
+    // },
+   
+    "tray": {
+        "icon-size": 13,
+        "tooltip": false,
+        "spacing": 10
+    },
+    "clock": {
+        "format": "{: %R   %m/%d}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "mpris": {
+	"format": "DEFAULT: {player_icon} {dynamic}",
+	"format-paused": "DEFAULT: {status_icon} <i>{dynamic}</i>",
+	"player-icons": {
+		"default": "▶",
+		"mpv": "🎵"
+	},
+	"status-icons": {
+		"paused": "⏸"
+	},
+	// "ignored-players": ["firefox"]
+    },  
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "tooltip": false,
+        "format-muted": " Muted",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +1%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ +1%",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": "🎙 {volume}%",
+        "format-source-muted": "🎙 Muted",
+        "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +1%",
+        "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -1%",
+        "scroll-step": 5
+    }
+}

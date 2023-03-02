@@ -3,21 +3,20 @@
 {
   imports = [~/dotfiles/modules/desktop/software/waybar.nix];
 
-  programs = {
-    bash = {
-      initExtra = ''
-        if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-           exec  Hyprland
-        fi
-      '';
-    };
-  };
-
   services.kdeconnect.enable = true;
 
-  xdg.configFile."wofi/config".source = ~/dotfiles/modules/desktop/configs/wofi/config;
+  xdg.configFile."wofi/config".source = ~/dotfiles/configs/wofi/config;
 
-  xdg.configFile."wofi/style.css".source = ~/dotfiles/modules/desktop/configs/wofi/wofi.css;
+  xdg.configFile."wofi/style.css".source = ~/dotfiles/configs/wofi/wofi.css;
+
+  xdg.configFile."rofi/config.rasi".source = ~/dotfiles/configs/rofi/config.rasi;  
+  gtk = {
+    enable = true;
+    theme = {
+      name = "catppuccin-gtk";
+      package = pkgs.catppuccin-gtk;
+    };
+  };
 
   programs.swaylock = {
     settings = {
@@ -30,7 +29,7 @@
     };
   };
 
-  xdg.configFile."hypr/hyprland.conf".source = /home/coryc/dotfiles/modules/desktop/configs/hyprland/hyprland.conf;
+  xdg.configFile."hypr/hyprland.conf".source = ~/dotfiles/configs/hyprland/hyprland.conf;
 
   systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
   wayland.windowManager.hyprland = {

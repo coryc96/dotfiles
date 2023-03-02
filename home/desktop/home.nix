@@ -47,7 +47,7 @@ set number
       nix-software = "vim $dotfiles/modules/desktop/software/software.nix";
       nix-sway = "vim $dotfiles/modules/desktop/sway/sway.nix";
       nix-hypr = "vim $dotfiles/modules/desktop/hyprland/hyprland.nix";
-      nix-hypr-conf = "vim $dotfiles/modules/desktop/configs/hyprland/hyprland.conf";
+      hypr-conf = "vim $dotfiles/configs/hyprland/hyprland.conf";
 
     };
     localVariables = {
@@ -66,7 +66,7 @@ set number
       }
       {
         name = "powerlevel10k-config";
-        src = "/home/coryc/dotfiles/modules/desktop/configs/zsh/powerlevel10k-config/";
+        src = "/home/coryc/dotfiles/configs/zsh/powerlevel10k-config/";
         file = ".p10k.zsh";
       }  
     ];
