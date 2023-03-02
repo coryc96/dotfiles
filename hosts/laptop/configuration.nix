@@ -22,7 +22,7 @@
   services.gvfs.enable = true;
   services.udisks2.enable = true;
 
-  networking.hostName = "corypc"; # Define your hostname.
+  networking.hostName = "corylaptop"; # Define your hostname.
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -63,47 +63,6 @@
       default_session = initial_session;
     };
   };
- 
-  # Enable SDDM for Hyprland
-  #services.xserver = {
-  #  enable = true;
-  #  displayManager = {
-  #    lightdm.enable = true;
-  #    autoLogin.enable = true;
-  #    autoLogin.user = "coryc";
-  #    defaultSession = "hyprland";
-  #    session = [
-  #      {
-  #        manage = "desktop";
-  #        name = "hyprland";
-  #        start = ''exec Hyprland'';
-  #      }
-  #    ];
-  #  };
-  #};
-   
-  # Enable the X11 windowing system.
-  #services.xserver.enable = true;
-  #services.xserver.displayManager.gdm.wayland = true;
-
-  # Enable the Gnome Desktop
-  #services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.gnome.enable = true;
-  
-  # Enable the KDE Desktop
-  #services.xserver.desktopManager.plasma5.enable = true;
-  #services.xserver.displayManager.defaultSession = "plasmawayland";
-  #services.xserver.displayManager.sddm.enable = true;
-
-  # Enable Hyprland
-  #programs.hyprland = {
-  #  enable = false;
-  #  xwayland = {
-  #    enable = true;
-  #    hidpi = true;
-  #  };
-  #  nvidiaPatches = true;
-  #};
 
   services.xserver = {
     layout = "us";
@@ -154,9 +113,7 @@
     LIBSEAT_BACKEND="logind";
     SDL_VIDEODRIVER="wayland";
     XDG_SESSION_TYPE="wayland";
-    GBM_BACKEND="nvidia-drm";
     GDK_BACKEND="wayland";
-    __GLX_VENDOR_LIBRARY_NAME="nvidia";
     QT_QPA_PLATFORM="wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION="1";
     MOZ_ENABLE_WAYLAND="1";
@@ -169,14 +126,11 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; 
-  services.xserver.videoDrivers = [ "nvidia" ];
   
-  hardware.nvidia.modesetting.enable = true;
   
   hardware.i2c.enable = true;
 
   # Optionally, you may need to select the appropriate driver version for your specific GPU.
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -264,7 +218,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.11"; # Did you read the comment?
   
   ## Auto-Upgrade
   system.autoUpgrade.enable = true;

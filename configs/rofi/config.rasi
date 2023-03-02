@@ -35,7 +35,7 @@ element {
 }
 
 element selected {
-	background-color: #74adc0;
+	background-color: #623965;
 }
 
 element-text {
@@ -76,7 +76,7 @@ entry {
 //} 
 
 prompt {
-	text-color: #aaffaa;
+	text-color: #FAB387;
 	padding: 10 6 0 10;
 	margin: 0 -2 0 0;
 }
