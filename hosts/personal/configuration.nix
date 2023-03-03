@@ -10,7 +10,7 @@
     [ # Include the results of the hardware scan.
     /etc/nixos/hardware-configuration.nix
     ../../modules/greetd/greetd.nix
-    ../../modules/polkit/polkit.nix
+    #../../modules/polkit/polkit.nix
     ];
 
   # Bootloader.
