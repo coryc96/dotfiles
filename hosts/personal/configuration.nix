@@ -121,6 +121,7 @@
     vulkan-validation-layers
     xdg-utils # for opening default programs when clicking links
     glib # gsettings
+    systemd
   ];
 
   programs.dconf.enable = true;
