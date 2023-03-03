@@ -8,7 +8,7 @@
       specialArgs = attrs;
       modules = [ 
         
-        ./hosts/configuration.nix
+        ./hosts/personal/configuration.nix
         ./modules/nvidia/nvidia.nix
         ./modules/wayland/wayland.nix
       
@@ -31,7 +31,7 @@
       specialArgs = attrs;
       modules = [ 
         
-        ./hosts/configuration.nix
+        ./hosts/personal/configuration.nix
         ./modules/wayland/wayland.nix
       
         ({ pkgs, config, ... }: {
