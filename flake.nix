@@ -8,9 +8,9 @@
       specialArgs = attrs;
       modules = [ 
         
-        /home/coryc/dotfiles/hosts/desktop/configuration.nix
-        /home/coryc/dotfiles/modules/nvidia/nvidia.nix
-        /home/coryc/dotfiles/modules/wayland/wayland.nix
+        ./hosts/configuration.nix
+        ./modules/nvidia/nvidia.nix
+        ./modules/wayland/wayland.nix
       
         ({ pkgs, config, ... }: {
           
@@ -31,8 +31,8 @@
       specialArgs = attrs;
       modules = [ 
         
-        /home/coryc/dotfiles/hosts/laptop/configuration.nix
-        /home/coryc/dotfiles/modules/wayland/wayland.nix
+        ./hosts/configuration.nix
+        ./modules/wayland/wayland.nix
       
         ({ pkgs, config, ... }: {
           
