@@ -36,7 +36,7 @@
       
         ({ pkgs, config, ... }: {
           
-          networking.hostName = "corypc";
+          networking.hostName = "corylaptop";
         
           # Bootloader.
 	  boot.loader.systemd-boot.enable = true;
