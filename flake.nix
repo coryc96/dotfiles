@@ -30,12 +30,14 @@
     #nixpkgs-wayland.inputs.master.follows = "master";
   };
   
-  outputs = { self, nixpkgs, home-manager, hyprland, nixpkgs-wayland, fu, eww, rust-overlay, ... }@attrs: {
-    nixosConfigurations.corypc = nixpkgs.lib.nixosSystem {
-      let
+  outputs = { self, nixpkgs, home-manager, hyprland, nixpkgs-wayland, fu, eww, rust-overlay, ... }@attrs: 
+  let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
       in {
+  {
+    nixosConfigurations.corypc = nixpkgs.lib.nixosSystem {
+      
       specialArgs = attrs;
       modules = [ 
         
