@@ -2,9 +2,10 @@
 {
   imports = [
     #~/dotfiles/modules/desktop/sway/sway.nix
-    ~/dotfiles/modules/hyprland/hyprland.nix
-    
-  ];
+    ~/dotfiles/modules/hyprland/hyprland.nix ]
+    ++ if builtins.getEnv "HOSTNAME" == "corypc"
+      then [../modules/software/desktop-software.nix]
+      else [../modules/software/laptop-software.nix];
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.

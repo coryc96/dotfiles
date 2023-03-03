@@ -36,35 +36,13 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      homeConfigurations."coryc@corypc" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.coryc = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
         modules = [ 
           ./home.nix
-          ../modules/software/desktop-software.nix
-          hyprland.homeManagerModules.default
-          ({pkgs, config, ...}: {
-            config = {
-          # use it as an overlay
-          nixpkgs.overlays = [ nixpkgs-wayland.overlay ];
-
-          home.packages = with pkgs; [
-            nixpkgs-wayland.packages.${system}.swww
-          ];
-
-        };
-      })];
-    };
-    homeConfigurations."coryc@corylaptop" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ 
-          ./home.nix
-          ../modules/software/laptop-software.nix
           hyprland.homeManagerModules.default
           ({pkgs, config, ...}: {
             config = {
