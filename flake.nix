@@ -87,7 +87,7 @@
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
         modules = [ 
-          ./home.nix
+          ./home/home.nix
           hyprland.homeManagerModules.default
           ({pkgs, config, ...}: {
             config = {
