@@ -101,12 +101,7 @@ set number
   home.stateVersion = "22.05";
 
   # Let Home Manager install and manage itself.
-  programs.home-manager = {
-    enable = true;
-    path = "~/dotfiles/home/home.nix";
-  };
-  services.home-manager.autoUpgrade = {
-    enable = true;
-    frequency = "weekly";
-  };
+  programs.home-manager.enable = true;
+  programs.home-manager.path = "~/dotfiles/home/home.nix";
+
 }

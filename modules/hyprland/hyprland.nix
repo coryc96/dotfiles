@@ -1,7 +1,7 @@
 {config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [~/dotfiles/modules/desktop/software/waybar.nix];
+  imports = [~/dotfiles/modules/waybar/waybar.nix];
 
   services.kdeconnect.enable = true;
 

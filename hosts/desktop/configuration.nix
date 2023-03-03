@@ -8,35 +8,28 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    #/home/coryc/dotfiles/hosts/desktop/greetd.nix
-    /home/coryc/dotfiles/hosts/desktop/polkit.nix
+    /etc/nixos/hardware-configuration.nix
+    /home/coryc/dotfiles/modules/greetd/greetd.nix
+    /home/coryc/dotfiles/modules/polkit/polkit.nix
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  #boot.loader.systemd-boot.enable = true;
+  #boot.loader.efi.canTouchEfiVariables = true;
+  #boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   services.devmon.enable = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
 
-  networking.hostName = "corypc"; # Define your hostname.
+  #networking.hostName = "corypc"; # Define your hostname.
 
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
   
-  services.mullvad-vpn.enable = true;
-  
   services.openssh.enable=true;
-
+  
   # Enable polkit
   security.polkit.enable = true;
 
@@ -51,42 +44,17 @@
   security.pam.services.swaylock = {
         text = "auth include login";
   };
-
-  services.greetd = {
-    enable = true;
-    restart = false;
-    settings = rec {
-      initial_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
-        user = "coryc";
-      };
-      default_session = initial_session;
-    };
-  };
- 
-  # Enable SDDM for Hyprland
-  #services.xserver = {
-  #  enable = true;
-  #  displayManager = {
-  #    lightdm.enable = true;
-  #    autoLogin.enable = true;
-  #    autoLogin.user = "coryc";
-  #    defaultSession = "hyprland";
-  #    session = [
-  #      {
-  #        manage = "desktop";
-  #        name = "hyprland";
-  #        start = ''exec Hyprland'';
-  #      }
-  #    ];
-  #  };
-  #};
    
   # Enable the X11 windowing system.
   #services.xserver.enable = true;
   #services.xserver.displayManager.gdm.wayland = true;
+  
 
+  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-kde ];
+  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  
   # Enable the Gnome Desktop
+  
   #services.xserver.displayManager.gdm.enable = true;
   #services.xserver.desktopManager.gnome.enable = true;
   
@@ -94,16 +62,6 @@
   #services.xserver.desktopManager.plasma5.enable = true;
   #services.xserver.displayManager.defaultSession = "plasmawayland";
   #services.xserver.displayManager.sddm.enable = true;
-
-  # Enable Hyprland
-  #programs.hyprland = {
-  #  enable = false;
-  #  xwayland = {
-  #    enable = true;
-  #    hidpi = true;
-  #  };
-  #  nvidiaPatches = true;
-  #};
 
   services.xserver = {
     layout = "us";
@@ -124,15 +82,6 @@
     pulse.enable = true;
 
   };
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-#    # use the example session manager (no others are packaged yet so this is enabled by default,
-#    # no need to redefine it in your config for now)
-#    #media-session.enable = true;
-#
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.coryc = {
@@ -148,19 +97,6 @@
     XDG_BIN_HOME    = "\${HOME}/.local/bin";
     XDG_DATA_HOME   = "\${HOME}/.local/share";
 
-    # WAYLAND
-    WLR_NO_HARDWARE_CURSORS="1";
-    WLR_RENDERER="vulkan";
-    LIBSEAT_BACKEND="logind";
-    SDL_VIDEODRIVER="wayland";
-    XDG_SESSION_TYPE="wayland";
-    GBM_BACKEND="nvidia-drm";
-    GDK_BACKEND="wayland";
-    __GLX_VENDOR_LIBRARY_NAME="nvidia";
-    QT_QPA_PLATFORM="wayland";
-    QT_WAYLAND_DISABLE_WINDOWDECORATION="1";
-    MOZ_ENABLE_WAYLAND="1";
-
     PATH = [
       "\${XDG_BIN_HOME}"
     ];
@@ -168,15 +104,9 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  environment.sessionVariables.NIXOS_OZONE_WL = "1"; 
-  services.xserver.videoDrivers = [ "nvidia" ];
-  
-  hardware.nvidia.modesetting.enable = true;
-  
   hardware.i2c.enable = true;
 
   # Optionally, you may need to select the appropriate driver version for your specific GPU.
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -189,8 +119,6 @@
     xorg.xrandr
     libsForQt5.qt5.qtwayland
     vulkan-validation-layers
-
-    # WAYLAND
     xdg-utils # for opening default programs when clicking links
     glib # gsettings
   ];
@@ -220,14 +148,6 @@
     driSupport = true;
     driSupport32Bit = true;
   };
-  
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # List services that you want to enable:
   
@@ -236,17 +156,6 @@
     enable = true;
     wlr.enable = true;
   };
-  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-kde ];
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
     networking.firewall = { 
     enable = true;

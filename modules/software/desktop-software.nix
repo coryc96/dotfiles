@@ -18,7 +18,6 @@
     pulseaudio
     wireplumber
     pavucontrol
-    binutils
     libsForQt5.index
     libsForQt5.polkit-kde-agent
     libsForQt5.qt5.qtwayland
@@ -40,12 +39,11 @@
     gnomeExtensions.sound-output-device-chooser
     libsForQt5.kdeconnect-kde
     mullvad-vpn
+    thunderbird
     # Optional Software
     airshipper
     tdesktop # telegram
     vivaldi
-    caprine-bin
-    vscode
     p7zip
     spotify
     # Games
