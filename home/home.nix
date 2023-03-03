@@ -3,8 +3,7 @@
   imports = [
     #~/dotfiles/modules/desktop/sway/sway.nix
     ~/dotfiles/modules/hyprland/hyprland.nix
-    ~/dotfiles/modules/software/desktop-software.nix
-    #~/dotfiles/modules/software/laptop-software.nix
+    
   ];
 
   # Home Manager needs a bit of information about you and the
