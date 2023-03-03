@@ -39,7 +39,7 @@
           networking.hostName = "corylaptop";
         
           # Bootloader.
-	  boot.loader.systemd-boot.enable = true;
+	  #boot.loader.systemd-boot.enable = true;
 	  boot.loader.grub.version = true;
 	  boot.loader.grub.device = "nodev";
 	  
