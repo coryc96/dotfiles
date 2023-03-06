@@ -18,9 +18,7 @@
     pulseaudio
     wireplumber
     pavucontrol
-    libsForQt5.index
     libsForQt5.polkit-kde-agent
-    libsForQt5.qt5.qtwayland
 
     # Desktop Software
     xfce.thunar
@@ -34,9 +32,6 @@
     remmina
     gimp
     obs-studio
-    gnomeExtensions.user-themes
-    gnomeExtensions.dash-to-panel
-    gnomeExtensions.sound-output-device-chooser
     libsForQt5.kdeconnect-kde
     mullvad-vpn
     thunderbird

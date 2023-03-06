@@ -1,15 +1,15 @@
 {config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [~/dotfiles/modules/waybar/waybar.nix];
+  imports = [../../modules/waybar/waybar.nix];
 
   services.kdeconnect.enable = true;
 
-  xdg.configFile."wofi/config".source = ~/dotfiles/configs/wofi/config;
+  xdg.configFile."wofi/config".source = ../../configs/wofi/config;
 
-  xdg.configFile."wofi/style.css".source = ~/dotfiles/configs/wofi/wofi.css;
+  xdg.configFile."wofi/style.css".source = ../../configs/wofi/wofi.css;
 
-  xdg.configFile."rofi/config.rasi".source = ~/dotfiles/configs/rofi/config.rasi;  
+  xdg.configFile."rofi/config.rasi".source = ../../configs/rofi/config.rasi;  
   gtk = {
     enable = true;
     theme = {
@@ -29,7 +29,7 @@
     };
   };
 
-  xdg.configFile."hypr/hyprland.conf".source = ~/dotfiles/configs/hyprland/hyprland.conf;
+  xdg.configFile."hypr/hyprland.conf".source = ../../configs/hyprland/hyprland.conf;
 
   systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
   wayland.windowManager.hyprland = {

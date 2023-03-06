@@ -1,17 +1,22 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, specialArgs, modulesPath, ... }:
+  
+let
+  desktop-packages = import ../modules/software/desktop-software.nix;
+  inherit (specialArgs) hostType isDesktop;
+  
+  inherit (lib) mkIf;
+in
 {
   imports = [
-    #~/dotfiles/modules/desktop/sway/sway.nix
-    ~/dotfiles/modules/hyprland/hyprland.nix ]
-    ++ if builtins.getEnv "HOSTNAME" == "corypc"
-      then [../modules/software/desktop-software.nix]
-      else [../modules/software/laptop-software.nix];
-
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = "coryc";
-  home.homeDirectory = "/home/coryc/";
+  ../modules/hyprland/hyprland.nix
   
+  ];
+  
+  home = {
+    username = "coryc";
+    homeDirectory = "/home/coryc";
+  };
+
   # GIT
   programs.git = {
     enable = true;
@@ -67,7 +72,7 @@ set number
       }
       {
         name = "powerlevel10k-config";
-        src = "/home/coryc/dotfiles/configs/zsh/powerlevel10k-config/";
+        src = ~/dotfiles/configs/zsh/powerlevel10k-config;
         file = ".p10k.zsh";
       }  
     ];
