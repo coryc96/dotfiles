@@ -159,7 +159,7 @@
   };
 
     networking.firewall = { 
-    enable = true;
+    enable = false;
     allowedTCPPortRanges = [ 
       { from = 1714; to = 1764; } # KDE Connect
     ];  
