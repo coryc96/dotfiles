@@ -1,4 +1,4 @@
-{ config, pkgs, lib, specialArgs, modulesPath, ... }:
+{ config, pkgs, lib, specialArgs, modulesPath, inputs, ... }:
   
 let
   desktop-packages = import ../modules/software/desktop-software.nix;
@@ -8,8 +8,8 @@ let
 in
 {
   imports = [
-  ../modules/hyprland/hyprland.nix
-  
+    ../modules/hyprland/hyprland.nix
+    ../modules/vim/vim.nix
   ];
   
   home = {
@@ -25,17 +25,16 @@ in
     # COME BACK TO THIS
   };
 
-  # VIM
-  programs.vim = {
-    enable = true;
-    plugins = with pkgs.vimPlugins; [ vim-nix ];
-    settings = { ignorecase = true; };
-    extraConfig = ''
-set number
-    '';
-    }; 
-
-
+ # # VIM
+ # programs.vim = {
+ #   enable = true;
+ #   plugins = with pkgs.vimPlugins; [ vim-nix ];
+ #   settings = { ignorecase = true; };
+ #   extraConfig = ''
+ #     set number
+ #   '';
+ #   }; 
+ 
   # ZSH
   programs.zsh = {
     enable = true;

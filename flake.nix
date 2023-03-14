@@ -70,7 +70,13 @@
 	  boot.loader.systemd-boot.enable = true;
 	  boot.loader.efi.canTouchEfiVariables = true;
 	  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-	  boot.loader.grub.devices = "nodev";
+          boot.loader.grub.devices = "nodev";
+
+          
+  	  boot.extraModprobeConfig = ''
+            options hid_apple fnmode=1
+          '';
+          
 	  
 	  
       
@@ -109,7 +115,7 @@
       ./home/home.nix
       ./modules/software/desktop-software.nix
       hyprland.homeManagerModules.default
-      
+
       ({pkgs, config, ...}: {
       config = {
           # use it as an overlay
@@ -144,25 +150,5 @@
         hostType = "laptop";
       };
     };
-    #homeConfigurations.coryc = home-manager.lib.homeManagerConfiguration {
-    #    inherit pkgs;
-
-    #    # Specify your home configuration modules here, for example,
-    #    # the path to your home.nix.
-    #    modules = [ 
-    #      ./home/home.nix
-    #      hyprland.homeManagerModules.default
-    #      ({pkgs, config, ...}: {
-    #        config = {
-    #      # use it as an overlay
-    #      nixpkgs.overlays = [ nixpkgs-wayland.overlay ];
-
-    #      home.packages = with pkgs; [
-    #        nixpkgs-wayland.packages.${system}.swww
-    #      ];
-
-    #    };
-    #  })];
-    #};
   };
 }

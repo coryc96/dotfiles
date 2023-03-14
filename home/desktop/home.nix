@@ -30,6 +30,15 @@ set number
     '';
     }; 
 
+  # NeoVIM
+  programs.neovim = {
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+      vim-nix
+
+    ];
+  };
+
 
   # ZSH
   programs.zsh = {

@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
 
     # Shell/Terminal/System
+    gcc
     tmux
     tilix
     ranger
@@ -19,9 +20,15 @@
     wireplumber
     pavucontrol
     libsForQt5.polkit-kde-agent
-
+    netcat
     # Desktop Software
+    bluez
+    blueman
     xfce.thunar
+    xfce.thunar-archive-plugin
+    xfce.thunar-volman
+    vscode
+    helix
     gnome-text-editor
     gnome.gnome-tweaks
     gparted
@@ -42,6 +49,7 @@
     p7zip
     spotify
     # Games
+    godot_4
     lutris
     retroarch
     prismlauncher
