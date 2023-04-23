@@ -91,7 +91,7 @@
   users.users.coryc = {
     isNormalUser = true;
     description = "Cory Chambers";
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "adbusers" ];
   };
 
   # Environment Variables
@@ -111,6 +111,9 @@
   hardware.i2c.enable = true;
 
   # Optionally, you may need to select the appropriate driver version for your specific GPU.
+
+  # Android
+  programs.adb.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -185,6 +188,8 @@
   ## Auto-Upgrade
   system.autoUpgrade.enable = true;
   
+  ## Kernel Version
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   ## Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

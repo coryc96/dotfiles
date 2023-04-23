@@ -37,11 +37,13 @@
     syncthing
     gnome.cheese
     remmina
+    blender
     gimp
     obs-studio
     libsForQt5.kdeconnect-kde
     mullvad-vpn
     thunderbird
+    rclone
     # Optional Software
     airshipper
     tdesktop # telegram
@@ -49,13 +51,16 @@
     p7zip
     spotify
     # Games
+    citra-nightly
+    dolphin-emu
+    desmume
+    yuzu
     godot_4
     lutris
     retroarch
     prismlauncher
     xonotic
     zeroad
-    steam
 
     # Wayland
     rofi-wayland
