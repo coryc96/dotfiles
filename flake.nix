@@ -45,7 +45,6 @@
         
         ./hosts/personal/configuration.nix
         ./modules/nvidia/nvidia.nix
-        ./modules/nvidia/nvidia-lookingglass.nix
         ./modules/wayland/wayland.nix
       
         ({ pkgs, config, ... }: {

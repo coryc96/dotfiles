@@ -11,6 +11,7 @@
     zsh-powerlevel10k
     git
     podman
+    baobab
     distrobox
     bash-completion
     kubectl

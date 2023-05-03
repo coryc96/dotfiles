@@ -10,7 +10,6 @@
     [ # Include the results of the hardware scan.
     /etc/nixos/hardware-configuration.nix
     ../../modules/greetd/greetd.nix
-    ../../modules/nvidia/nvidia-lookingglass.nix
     #../../modules/polkit/polkit.nix
     ];
 
