@@ -11,26 +11,11 @@
     hyprland.url = "github:hyprwm/Hyprland";
 
     nixpkgs-wayland  = { url = "github:nix-community/nixpkgs-wayland"; };
+    waybar-git = { url = "github:alexays/waybar"; };
     
-    fu.url = "github:numtide/flake-utils";
-
-    eww = { 
-      url = "github:elkowar/eww";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
-    };
-
-     rust-overlay = {
-       url = "github:oxalica/rust-overlay";
-       inputs.nixpkgs.follows = "nixpkgs";
-       inputs.flake-utils.follows = "fu";
-     };
-    # only needed if you use as a package set:
-    #nixpkgs-wayland.inputs.nixpkgs.follows = "cmpkgs";
-    #nixpkgs-wayland.inputs.master.follows = "master";
   };
   
-  outputs = { self, nixpkgs, home-manager, hyprland, nixpkgs-wayland, fu, eww, rust-overlay, ... }@attrs: 
+  outputs = { self, nixpkgs, home-manager, hyprland, nixpkgs-wayland, waybar-git, ... }@attrs: 
   let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
@@ -60,6 +45,7 @@
         
         ./hosts/personal/configuration.nix
         ./modules/nvidia/nvidia.nix
+        ./modules/nvidia/nvidia-lookingglass.nix
         ./modules/wayland/wayland.nix
       
         ({ pkgs, config, ... }: {
@@ -143,8 +129,9 @@
       nixpkgs.overlays = [ nixpkgs-wayland.overlay ];
       
       home.packages = with pkgs; [
-            nixpkgs-wayland.packages.${system}.swww
-         ];
+        nixpkgs-wayland.packages.${system}.swww
+        waybar-git.packages.${system}.waybar
+      ];
       
       extraSpecialArgs = {
         hostType = "laptop";

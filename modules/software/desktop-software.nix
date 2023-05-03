@@ -15,25 +15,29 @@
     bash-completion
     kubectl
     kubernetes-helm-wrapped
-    openjdk17-bootstrap
+    #openjdk17-bootstrap
+    jre8_headless
     pulseaudio
     wireplumber
     pavucontrol
     libsForQt5.polkit-kde-agent
     netcat
+    nfs-utils
+    cifs-utils
+    syncthing
     # Desktop Software
     bluez
     blueman
     xfce.thunar
     xfce.thunar-archive-plugin
     xfce.thunar-volman
-    vscode
     helix
     gnome-text-editor
     gnome.gnome-tweaks
     gparted
     keepassxc
     firefox
+    image-roll
     syncthing
     gnome.cheese
     remmina
@@ -72,7 +76,7 @@
     swaylock-effects
     wl-clipboard
     alacritty
-    waybar
+    #waybar
     wofi
     wdisplays
     playerctl

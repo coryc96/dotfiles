@@ -10,6 +10,7 @@
     [ # Include the results of the hardware scan.
     /etc/nixos/hardware-configuration.nix
     ../../modules/greetd/greetd.nix
+    ../../modules/nvidia/nvidia-lookingglass.nix
     #../../modules/polkit/polkit.nix
     ];
 
@@ -40,14 +41,14 @@
   i18n.defaultLocale = "en_US.utf8";
 
 #  environment.loginShellInit= "[[ "$(tty)" == /dev/tty1 ]] && sway";
-  # SwayLock PAM Auth
+ # SwayLock PAM Auth
   security.pam.services.swaylock = {
         text = "auth include login";
   };
    
   # Enable the X11 windowing system.
-  #services.xserver.enable = true;
-  #services.xserver.displayManager.gdm.wayland = true;
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.wayland = true;
   
 
   #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-kde ];
@@ -129,6 +130,8 @@
     xdg-utils # for opening default programs when clicking links
     glib # gsettings
     systemd
+
+    looking-glass-client
   ];
 
   programs.dconf.enable = true;
