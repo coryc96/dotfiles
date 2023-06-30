@@ -1,59 +1,20 @@
-{ config, pkgs, lib, specialArgs, modulesPath, inputs, ... }:
-  
-let
-  desktop-packages = import ../modules/software/desktop-software.nix;
-  inherit (specialArgs) hostType isDesktop;
-  
-  inherit (lib) mkIf;
-in
+{ config, pkgs, ... }:
+
 {
-  imports = [
-    ../modules/hyprland/hyprland.nix
-    ../modules/vim/vim.nix
-  ];
-  
-  home = {
-    username = "coryc";
-    homeDirectory = "/home/coryc";
-  };
+  # Home Manager needs a bit of information about you and the
+  # paths it should manage.
+  home.username = "coryc";
+  home.homeDirectory = "/home/coryc";
 
-  # GIT
-  programs.git = {
-    enable = true;
-    userName = "Cory Chambers";
-    userEmail = "corychambers96@gmail.com";
-    # COME BACK TO THIS
-  };
-
- # # VIM
- # programs.vim = {
- #   enable = true;
- #   plugins = with pkgs.vimPlugins; [ vim-nix ];
- #   settings = { ignorecase = true; };
- #   extraConfig = ''
- #     set number
- #   '';
- #   }; 
- 
   # ZSH
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
+    enableCompletion = true;
     enableSyntaxHighlighting = true;
     shellAliases = {
 
       k = "kubectl";
-      cerberos = "export KUBECONFIG=$HOME/Documents/k8s/cerberos.yaml";
-      rancher = "export KUBECONFIG=$HOME/Documents/k8s/rancher.yaml";
-      infrastructure = "export KUBECONFIG=$HOME/Documents/k8s/infrastructure.yaml";
-
-      nix-home = "vim $dotfiles/home/desktop/home.nix";
-      nix-config = "sudo vim $dotfiles/hosts/desktop/configuration.nix";
-      nix-software = "vim $dotfiles/modules/desktop/software/software.nix";
-      nix-sway = "vim $dotfiles/modules/desktop/sway/sway.nix";
-      nix-hypr = "vim $dotfiles/modules/desktop/hyprland/hyprland.nix";
-      hypr-conf = "vim $dotfiles/configs/hyprland/hyprland.conf";
-
     };
     localVariables = {
       KUBECONFIG="$HOME/Documents/k8s/cerberos.yaml";
@@ -71,7 +32,7 @@ in
       }
       {
         name = "powerlevel10k-config";
-        src = ~/dotfiles/configs/zsh/powerlevel10k-config;
+        src = ../configs/zsh/powerlevel10k-config;
         file = ".p10k.zsh";
       }  
     ];
@@ -81,17 +42,7 @@ in
     };
   };
 
-  ## THEMES ##
-  
- # gtk = {
- #   enable = true;
- #   theme = {
- #     name = "Qogir-Dark";
- #     package = pkgs.qogir-theme;
- #   };
- # };
-  
-# Cursor
+  # Cursor -- Primarily in a TWM
   home.pointerCursor = {
     name = "Adwaita";
     package = pkgs.gnome.adwaita-icon-theme;
@@ -102,10 +53,16 @@ in
     };
   };
 
-  home.stateVersion = "22.05";
+   # This value determines the Home Manager release that your
+  # configuration is compatible with. This helps avoid breakage
+  # when a new Home Manager release introduces backwards
+  # incompatible changes.
+  #
+  # You can update Home Manager without changing this value. See
+  # the Home Manager release notes for a list of state version
+  # changes in each release.
+  home.stateVersion = "22.11";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  programs.home-manager.path = "~/dotfiles/home/home.nix";
-
 }

@@ -1,5 +1,6 @@
 {
-  description = "Personal Configuration Flake";
+  description = "Home Manager configuration of Jane Doe";
+
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -9,132 +10,68 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprpaper = { url = "github:hyprwm/hyprpaper"; };
 
     nixpkgs-wayland  = { url = "github:nix-community/nixpkgs-wayland"; };
     waybar-git = { url = "github:alexays/waybar"; };
-    
+
   };
-  
-  outputs = { self, nixpkgs, home-manager, hyprland, nixpkgs-wayland, waybar-git, ... }@attrs: 
-  let
-        system = "x86_64-linux";
-        pkgs = nixpkgs.legacyPackages.${system};
-        
-        mkHomeConfiguration = args: home-manager.lib.homeManagerConfiguration (rec {
-          inherit pkgs;
 
-          modules = [
-            ./home/home.nix
-            hyprland.homeManagerModules.default
-            {
-
-              nixpkgs.overlays = [ nixpkgs-wayland.overlay ];
-
-              home = {
-                username = "coryc";
-                homeDirectory = "/home/coryc";
-              };
-            }
-          ]; 
-      } // args);
-      in {
-    nixosConfigurations.corypc = nixpkgs.lib.nixosSystem {
-      
-      specialArgs = attrs;
-      modules = [ 
-        
-        ./hosts/personal/configuration.nix
-        ./modules/nvidia/nvidia.nix
-        ./modules/wayland/wayland.nix
-      
-        ({ pkgs, config, ... }: {
-          
-          networking.hostName = "corypc";
-        
-          # Bootloader.
-	  boot.loader.systemd-boot.enable = true;
-	  boot.loader.efi.canTouchEfiVariables = true;
-	  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-          boot.loader.grub.devices = "nodev";
-
-          
-  	  boot.extraModprobeConfig = ''
-            options hid_apple fnmode=1
-          '';
-          
-	  
-	  
-      
-        })
-      ];
-    };
-    nixosConfigurations.corylaptop = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs, home-manager, hyprland, nixpkgs-wayland, waybar-git, hyprpaper, ... }:
+    let
       system = "x86_64-linux";
-      specialArgs = attrs;
-      modules = [ 
-        
-        ./hosts/personal/configuration.nix
-        ./modules/wayland/wayland.nix
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
       
-        ({ pkgs, config, ... }: {
-          
-          networking.hostName = "corylaptop";
-        
-          # Bootloader.
-	  #boot.loader.systemd-boot.enable = true;
-	  boot.loader.grub.enable = true;
-	  boot.loader.grub.device = "/dev/sda";
-	  boot.loader.grub.useOSProber = true;
-	  
-	  
-      
+      # Host Configuration
+      nixosConfigurations.nixpc = nixpkgs.lib.nixosSystem {
+        modules = [
+          ./nixos/configuration.nix
+          ./modules/wayland/wayland.nix
+          ./modules/greetd/greetd.nix
+
+      ({ pkgs, config, ... }: {
+
+        boot.extraModprobeConfig = ''
+            options hid_apple fnmode=1
+            '';
+            boot.supportedFilesystems = [ "ntfs" ];
+            fileSystems."/mnt/data" =
+              { device = "/dev/disk/by-id/wwn-0x5002538f31518925-part3";
+                fsType = "ntfs3";
+                options = ["rw" "uid=1000"];
+              };
+
         })
       ];
-    };
-###                     ###
-    ### HOME-MANAGER ###
-###                     ###
-    
-    homeConfigurations.desktop = mkHomeConfiguration {
-      modules = [
-      ./home/home.nix
-      ./modules/software/desktop-software.nix
-      hyprland.homeManagerModules.default
-
-      ({pkgs, config, ...}: {
-      config = {
-          # use it as an overlay
-      nixpkgs.overlays = [ nixpkgs-wayland.overlay ];
-
-      home.packages = with pkgs; [
-        nixpkgs-wayland.packages.${system}.swww
-      ];
       };
-      })];
-        
-      extraSpecialArgs = {
-        hostType = "desktop";
-        isDesktop = true;
-      };
-    };
 
-    homeConfigurations.laptop = mkHomeConfiguration {
-      modules = [
-      ./home/home.nix
-      ./modules/software/desktop-software.nix
-      hyprland.homeManagerModules.default
-      ];
-      
-      nixpkgs.overlays = [ nixpkgs-wayland.overlay ];
-      
-      home.packages = with pkgs; [
-        nixpkgs-wayland.packages.${system}.swww
-        waybar-git.packages.${system}.waybar
-      ];
-      
-      extraSpecialArgs = {
-        hostType = "laptop";
+      homeConfigurations.coryc = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+        # Specify your home configuration modules here, for example,
+        # the path to your home.nix.
+        modules = [
+          ./home/home.nix
+          ./home/software.nix
+          ./modules/hyprland/hyprland.nix
+          hyprland.homeManagerModules.default
+          ({pkgs, config, ...}: {
+            config = {
+            # use it as an overlay
+              nixpkgs.overlays = [ nixpkgs-wayland.overlay];
+
+              home.packages = with pkgs; [
+                hyprpaper.packages.${system}.hyprpaper
+                nixpkgs-wayland.packages.${system}.swww
+              ];
+            };
+          })];
+        # Optionally use extraSpecialArgs
+        # to pass through arguments to home.nix
       };
     };
-  };
 }
