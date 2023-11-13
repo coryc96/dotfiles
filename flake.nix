@@ -15,9 +15,11 @@
     nixpkgs-wayland  = { url = "github:nix-community/nixpkgs-wayland"; };
     waybar-git = { url = "github:alexays/waybar"; };
 
+    nix-software-center.url = "github:vlinkz/nix-software-center";
+
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, nixpkgs-wayland, waybar-git, hyprpaper, ... }:
+  outputs = { self, nixpkgs, home-manager, hyprland, nixpkgs-wayland, waybar-git, hyprpaper, nix-software-center, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -28,7 +30,7 @@
         modules = [
           ./nixos/configuration.nix
           ./modules/wayland/wayland.nix
-          ./modules/greetd/greetd.nix
+          #./modules/greetd/greetd.nix
 
       ({ pkgs, config, ... }: {
 
@@ -39,8 +41,14 @@
             fileSystems."/mnt/data" =
               { device = "/dev/disk/by-id/wwn-0x5002538f31518925-part3";
                 fsType = "ntfs3";
-                options = ["rw" "uid=1000"];
+                options = ["rw" "uid=1000" "nofail"];
               };
+          # HYPRLAND
+         # programs.hyprland.enable = true;
+         # nix.settings = {
+         #   substituters = ["https://hyprland.cachix.org"];
+         #   trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+         # };
 
         })
       ];
@@ -57,9 +65,9 @@
         modules = [
           ./home/home.nix
           ./home/software.nix
-          ./modules/hyprland/hyprland.nix
-          hyprland.homeManagerModules.default
-          ({pkgs, config, ...}: {
+         # ./modules/hyprland/hyprland.nix
+         # hyprland.homeManagerModules.default
+          ({ pkgs, config, ...}: {
             config = {
             # use it as an overlay
               nixpkgs.overlays = [ nixpkgs-wayland.overlay];
@@ -67,6 +75,7 @@
               home.packages = with pkgs; [
                 hyprpaper.packages.${system}.hyprpaper
                 nixpkgs-wayland.packages.${system}.swww
+                nix-software-center.packages.${system}.nix-software-center
               ];
             };
           })];

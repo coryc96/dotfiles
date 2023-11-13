@@ -2,16 +2,19 @@
 
 {
   environment.sessionVariables = rec {
+    QT_QPA_PLATFORMTHEME="wayland;xcb";
+    GBM_BACKEND="nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME="nvidia";
+    ENABLE_VKBASALT="1";
     LIBVA_DRIVER_NAME="nvidia";
-    WLR_NO_HARDWARE_CURSORS="1";
     WLR_RENDERER="vulkan";
-    LIBSEAT_BACKEND="logind";
-    SDL_VIDEODRIVER="wayland";
-    XDG_SESSION_TYPE="wayland";
     GDK_BACKEND="wayland";
-    QT_QPA_PLATFORM="wayland";
-    QT_WAYLAND_DISABLE_WINDOWDECORATION="1";
     MOZ_ENABLE_WAYLAND="1";
-    NIXOS_OZONE_WL = "1";
+    DXVK_ENABLE_NVAPI="1";
+    PROTON_ENABLE_NGX_UPDATER="1";
+    PROTON_ENABLE_NVAPI="1";
+    PROTON_FORCE_LARGE_ADDRESS_AWARE="1";
+    PROTON_HIDE_NVIDIA_GPU="0";
+    VKD3D_CONFIG="dxr";
   };
 }

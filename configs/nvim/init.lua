@@ -204,10 +204,13 @@ vim.o.hlsearch = false
 -- Make line numbers default
 vim.wo.number = true
 
+vim.wo.foldmethod = "indent"
+vim.cmd('set foldlevel=99')
+
 vim.wo.cursorline = true
 
 -- Enable mouse mode
-vim.o.mouse = 'a'
+--vim.o.mouse = 'a'
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -216,6 +219,10 @@ vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
+
+-- Enable 4 space tab
+vim.opt["tabstop"] = 4
+vim.opt["shiftwidth"] = 4
 
 -- Save undo history
 vim.o.undofile = true

@@ -19,10 +19,8 @@
   wayland.windowManager.hyprland = {
     enable = true;
     systemdIntegration = true;
-    nvidiaPatches = true;
     xwayland = {
       enable = true;
-      hidpi = true;
     };
   };
 }

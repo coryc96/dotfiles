@@ -1,17 +1,39 @@
 { config, pkgs, ... }:
 
+let
+  configure-gtk = pkgs.writeTextFile {
+    name = "configure-gtk";
+    destination = "/bin/configure-gtk";
+    executable = true;
+    text = let
+      schema = pkgs.gsettings-desktop-schemas;
+      datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+    in ''
+      export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+      gnome_schema=org.gnome.desktop.interface
+      gsettings set $gnome_schema gtk-theme 'catppuccin-gtk'
+    '';
+  };
+
+
+in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "coryc";
   home.homeDirectory = "/home/coryc";
 
+  home.packages = with pkgs; [
+    glib
+    configure-gtk
+  ];
+
   # ZSH
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     shellAliases = {
 
       k = "kubectl";
@@ -42,6 +64,7 @@
     };
   };
 
+
   # Cursor -- Primarily in a TWM
   home.pointerCursor = {
     name = "Adwaita";
@@ -52,6 +75,7 @@
       defaultCursor = "Adwaita";
     };
   };
+
 
    # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

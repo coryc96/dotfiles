@@ -20,6 +20,8 @@
     ];
   };
 
+  hardware.bluetooth.enable = true;
+
   services.xserver.videoDrivers = [ "nvidia" ];
   
   hardware.nvidia.modesetting.enable = true;
@@ -73,11 +75,15 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.displayManager.gdm.wayland = true;
 
   # Enable the GNOME Desktop Environment.
-  #services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  # Enable the KDE Desktop Environment
+  #services.xserver.displayManager.sddm.enable = true;
+  #services.xserver.displayManager.defaultSession = "plasmawayland";
+  #services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -142,6 +148,13 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   environment.shells = with pkgs; [zsh];
+
+  # Steam
+  programs.steam = {
+  enable = true;
+  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+};
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
