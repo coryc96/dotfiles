@@ -11,7 +11,9 @@
 
   xdg.configFile."nvim/init.lua".source = ../../configs/nvim/init.lua;
 
-  #NeoVim
+
+
+  # NeoVim
   programs.neovim = {
     enable = true;
     vimAlias = true;

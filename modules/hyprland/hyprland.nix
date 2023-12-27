@@ -1,7 +1,14 @@
 {config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [../../modules/waybar/waybar.nix];
+  imports = [
+    ../../modules/waybar/waybar.nix
+  ];
+
+  home.packages = with pkgs; [eww-wayland];
+  
+  xdg.configFile."eww/eww.yuck".source = ../../configs/eww/eww.yuck;
+  xdg.configFile."eww/eww.scss".source = ../../configs/eww/eww.scss;
 
   services.kdeconnect.enable = true;
 

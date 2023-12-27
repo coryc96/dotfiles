@@ -38,23 +38,38 @@
        "Alacritty"
     ],
     },
-    "wlr/workspaces": {
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1",
-        "all-outputs": true,
-        "on-click": "activate",
-        "format": "{icon}",
-        "format-icons": {
-            "1": "⬤",
-            "2": "⬤",
-            "3": "⬤",
-            "4": "⬤",
-            "5": "⬤",
-            "urgent": "⬤",
-            "active": "⬤",
-            "default": "⬤"
-          }
+	"hyprland/workspaces": {
+      "format": "{icon}",
+      "on-click": "activate",
+      "format-icons": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "urgent": "",
+        "active": "",
+        "default": ""
+      },
+      "sort-by-number": true
     },
+//    "hyprland/workspaces": {
+//        "on-scroll-up": "hyprctl dispatch workspace e+1",
+//        "on-scroll-down": "hyprctl dispatch workspace e-1",
+//        "all-outputs": true,
+//        "on-click": "activate",
+//        "format": "{icon}",
+//        "format-icons": {
+//            "1": "⬤",
+//            "2": "⬤",
+//            "3": "⬤",
+//            "4": "⬤",
+//            "5": "⬤",
+//            "urgent": "⬤",
+//            "active": "⬤",
+//            "default": "⬤"
+//          }
+//    },
     // "cpu": {
     //     "interval": 10,
     //     "format": " {}%",

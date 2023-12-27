@@ -35,9 +35,13 @@ in
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
-
+      hm-switch = "nix-channel --update home-manager && home-manager switch --flake /home/coryc/dotfiles/#coryc --impure";
       k = "kubectl";
     };
+    initExtra =  
+	''
+source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+	'';
     localVariables = {
       KUBECONFIG="$HOME/Documents/k8s/cerberos.yaml";
       dotfiles="$HOME/dotfiles";

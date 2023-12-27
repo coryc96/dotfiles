@@ -2,19 +2,25 @@
 
 {
   environment.sessionVariables = rec {
-    QT_QPA_PLATFORMTHEME="wayland;xcb";
-    GBM_BACKEND="nvidia-drm";
-    __GLX_VENDOR_LIBRARY_NAME="nvidia";
-    ENABLE_VKBASALT="1";
-    LIBVA_DRIVER_NAME="nvidia";
-    WLR_RENDERER="vulkan";
+
     GDK_BACKEND="wayland";
+    SDL_VIDEODRIVER="wayland";
+    CLUTTER_BACKEND="wayland";
     MOZ_ENABLE_WAYLAND="1";
-    DXVK_ENABLE_NVAPI="1";
+    MOZ_DISABLE_RDD_SANDBOX="1";
+    _JAVA_AWT_WM_NONREPARENTING="1";
+    QT_AUTO_SCREEN_SCALE_FACTOR="1";
+    QT_QPA_PLATFORM="wayland";
+    WLR_NO_HARDWARE_CURSORS="1";
+    __NV_PRIME_RENDER_OFFLOAD="1";
     PROTON_ENABLE_NGX_UPDATER="1";
-    PROTON_ENABLE_NVAPI="1";
-    PROTON_FORCE_LARGE_ADDRESS_AWARE="1";
-    PROTON_HIDE_NVIDIA_GPU="0";
-    VKD3D_CONFIG="dxr";
+    NVD_BACKEND="direct";
+    __GL_GSYNC_ALLOWED="1";
+    __GL_VRR_ALLOWED="1";
+    WLR_DRM_NO_ATOMIC="1";
+    WLR_USE_LIBINPUT="1";
+    __GL_MaxFramesAllowed="1";
+    WLR_RENDERER_ALLOW_SOFTWARE="1";
+
   };
 }

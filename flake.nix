@@ -3,23 +3,33 @@
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprpaper = { url = "github:hyprwm/hyprpaper"; };
+    plasma-manager.url = "github:pjones/plasma-manager";
+    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.inputs.home-manager.follows = "home-manager";
+
+#    hyprland.url = "github:hyprwm/Hyprland";
+#    hyprpaper = { url = "github:hyprwm/hyprpaper"; };
 
     nixpkgs-wayland  = { url = "github:nix-community/nixpkgs-wayland"; };
-    waybar-git = { url = "github:alexays/waybar"; };
+#   waybar-git = { url = "github:alexays/waybar"; };
 
     nix-software-center.url = "github:vlinkz/nix-software-center";
 
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, nixpkgs-wayland, waybar-git, hyprpaper, nix-software-center, ... }:
+  outputs = { self, nixpkgs, home-manager,
+  plasma-manager,
+#  hyprland, 
+  nixpkgs-wayland, 
+#  waybar-git, 
+#  hyprpaper, 
+  nix-software-center, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -30,10 +40,13 @@
         modules = [
           ./nixos/configuration.nix
           ./modules/wayland/wayland.nix
-          #./modules/greetd/greetd.nix
+          ./modules/greetd/greetd.nix
 
       ({ pkgs, config, ... }: {
 
+        boot.initrd.kernelModules = ["amdgpu"];
+
+        services.xserver.videoDrivers = ["amdgpu"];
         boot.extraModprobeConfig = ''
             options hid_apple fnmode=1
             '';
@@ -44,12 +57,23 @@
                 options = ["rw" "uid=1000" "nofail"];
               };
           # HYPRLAND
-         # programs.hyprland.enable = true;
-         # nix.settings = {
-         #   substituters = ["https://hyprland.cachix.org"];
-         #   trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-         # };
+#          programs.hyprland.enable = true;
+#          nix.settings = {
+#            substituters = ["https://hyprland.cachix.org"];
+#            trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+#          };
 
+	system.autoUpgrade = {
+	    enable = true;
+	    flake = self.outPath;
+	    flags = [
+		"--update-input"
+	        "nixpkgs"
+		"-L" # print build logs
+	];
+	    dates = "02:00";
+	    randomizedDelaySec = "45min";
+	};
         })
       ];
       };
@@ -65,16 +89,17 @@
         modules = [
           ./home/home.nix
           ./home/software.nix
-         # ./modules/hyprland/hyprland.nix
-         # hyprland.homeManagerModules.default
+		  plasma-manager.homeManagerModules.plasma-manager
+#          ./modules/hyprland/hyprland.nix
+#          hyprland.homeManagerModules.default
           ({ pkgs, config, ...}: {
             config = {
             # use it as an overlay
               nixpkgs.overlays = [ nixpkgs-wayland.overlay];
 
               home.packages = with pkgs; [
-                hyprpaper.packages.${system}.hyprpaper
-                nixpkgs-wayland.packages.${system}.swww
+#                hyprpaper.packages.${system}.hyprpaper
+                #nixpkgs-wayland.packages.${system}.swww
                 nix-software-center.packages.${system}.nix-software-center
               ];
             };

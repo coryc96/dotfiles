@@ -28,10 +28,6 @@ tooltip {
 
 #workspaces button.active {
     color: #a6adc8;
-}
-
-#workspaces button.focused {
-    color: #a6adc8;
     background: #eba0ac;
     border-radius: 10px;
 }

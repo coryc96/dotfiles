@@ -16,25 +16,13 @@
     driSupport = true;
     driSupport32Bit = true;
     extraPackages = with pkgs; [
-      nvidia-vaapi-driver
     ];
   };
 
   hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
-  services.xserver.videoDrivers = [ "nvidia" ];
   
-  hardware.nvidia.modesetting.enable = true;
-  
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-
-
-  environment.sessionVariables = rec {
-    GBM_BACKEND="nvidia-drm";
-    __GLX_VENDOR_LIBRARY_NAME="nvidia";
-  };
-
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -77,13 +65,14 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true;
 
   # Enable the KDE Desktop Environment
-  #services.xserver.displayManager.sddm.enable = true;
+  #services.xserver.displayManager.lightdm.enable = true;
+  #services.xserver.displayManager.sddm.wayland.enable = true;
   #services.xserver.displayManager.defaultSession = "plasmawayland";
-  #services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -151,7 +140,7 @@
 
   # Steam
   programs.steam = {
-  enable = true;
+  enable = false;
   remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
   dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
 };
@@ -163,6 +152,15 @@
     wget
     git
     gnome.gnome-disk-utility
+    rustc
+    just
+    cosmic-icons
+    cosmic-settings
+    cosmic-comp
+    cosmic-panel
+    cosmic-greeter
+    cosmic-osd
+    cosmic-applets
     xorg.xrandr
     vulkan-validation-layers
     vulkan-tools
@@ -196,9 +194,6 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
 
-  ## Auto-Upgrade
-  system.autoUpgrade.enable = true;
-  
   ## Kernel Version
   boot.kernelPackages = pkgs.linuxPackages_latest;
   ## Flakes

@@ -3,6 +3,8 @@
 
   imports = [
     ../modules/vim/vim.nix
+    ../modules/alacritty/alacritty.nix
+	../modules/plasma/plasma.nix
   ];
 
   home.packages = with pkgs; [
@@ -10,6 +12,7 @@
   # Shell/Terminal/System
   zsh-powerlevel10k
   podman
+  fira-code-nerdfont
   baobab
   distrobox
   kubectl
@@ -22,32 +25,39 @@
   networkmanagerapplet
   gnome.nautilus
   remmina
-  nwg-panel
-  nwg-displays
+  jq
+  libsForQt5.polonium
+#  nwg-look
+#  nwg-displays
   wlr-randr
   appimage-run
   xdg-desktop-portal-wlr
   xdg-desktop-portal-gtk
-  xdg-desktop-portal-hyprland
+#  xdg-desktop-portal-hyprland
 
   # Development
   rustup
+  helix
+  cosmic-edit
 
   # Desktop Software
   gnome.gnome-tweaks
+  partition-manager
   gparted
   keepassxc
   firefox
+  beeper
   gnome.cheese
   blender
   gimp
   obs-studio
+  virtualbox
   libsForQt5.kdeconnect-kde
   thunderbird
   tdesktop
   p7zip
   shotwell
-  logseq
+  #logseq
   syncthing
   catppuccin-gtk
 
@@ -56,8 +66,16 @@
   desmume
   yuzu
   godot_4
-  #airshipper
-  prismlauncher
+  airshipper
+  (prismlauncher.override { 
+    jdks = [ 
+      jdk8
+      jdk19 
+    ];
+})
+  gamescope
+  lutris
+  wine-wayland
 
   # Wayland 
   rofi-wayland
@@ -73,7 +91,7 @@
   playerctl
 
   # Custom Desktop Entries
-  #ferdium
+  ferdium
   discord
   ];
   
@@ -96,6 +114,9 @@
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
+    };
+    "org/gnome/mutter" = {
+      check-alive-timeout="60000";
     };
   };
 }
