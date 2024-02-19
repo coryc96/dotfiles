@@ -59,8 +59,8 @@
 
 
     configFile = {
-      "kscreenlockerrc"."Greeter.Wallpaper.org.kde.image.General"."Image" = "/home/coryc/Downloads/space-cowboy.png";
-      "kscreenlockerrc"."Greeter.Wallpaper.org.kde.image.General"."PreviewImage" = "/home/coryc/Downloads/space-cowboy.png";
+      "kscreenlockerrc"."Greeter.Wallpaper.org.kde.image.General"."Image" = "../../assets/space-cowboy.png";
+      "kscreenlockerrc"."Greeter.Wallpaper.org.kde.image.General"."PreviewImage" = "../../assets/space-cowboy.png";
       "ksplashrc"."KSplash"."Engine" = "none";
       "kwalletrc"."Wallet"."First Use" = false;
       "kwinrc"."Desktops"."Number" = 3;

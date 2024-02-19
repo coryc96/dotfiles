@@ -27,6 +27,7 @@
   remmina
   jq
   libsForQt5.polonium
+  xwaylandvideobridge
 #  nwg-look
 #  nwg-displays
   wlr-randr
@@ -45,6 +46,7 @@
   partition-manager
   gparted
   keepassxc
+  floorp
   firefox
   beeper
   gnome.cheese

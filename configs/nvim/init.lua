@@ -25,7 +25,8 @@ plugins = {
 { 'echasnovski/mini.pairs', version = false },
 { 'echasnovski/mini.files', version = false },
 { 'echasnovski/mini.pick', version = false },
-{ 'echasnovski/mini.extra', version = false }
+{ 'echasnovski/mini.extra', version = false },
+{ 'echasnovski/mini.completion', version = false }
 --{ 'stevearc/oil.nvim' }
 }
 
@@ -38,6 +39,7 @@ require("mini.pairs").setup() -- Enables auto-pair creation
 require("mini.files").setup() -- Enables the mini.files explorer
 require("mini.pick").setup() -- Enables fuzzy search (telescope-esque)
 require("mini.extra").setup() -- Provides extra pickers for mini.pick
+require("mini.completion").setup() -- Provides lsp completion
 --require("oil").setup()
 
 -- Add hybrid line numbers
@@ -51,6 +53,19 @@ vim.o.hlsearch = false -- Unhighlights text after search is done (enter)
 
 -- Sets mouse mode
 vim.o.mouse = 'a'
+vim.api.nvim_set_keymap(
+  "", "<RightDrag>", "<LeftDrag>",
+  { noremap }
+)
+vim.api.nvim_set_keymap(
+  "", "<RightMouse>", "<LeftMouse>",
+  { noremap }
+)
+vim.api.nvim_set_keymap(
+  "", "<LeftMouse>", "<nop>",
+  { noremap }
+)
+
 
 -- Sets full clipboard
 vim.o.clipboard=unnamedplus
