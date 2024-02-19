@@ -78,6 +78,43 @@
       ];
       };
 
+      nixosConfigurations.nixframe = nixpkgs.lib.nixosSystem {
+        modules = [
+          ./nixos/configuration.nix
+          ./modules/wayland/wayland.nix
+          ./modules/greetd/greetd.nix
+
+      ({ pkgs, config, ... }: {
+
+        boot.extraModprobeConfig = ''
+            options hid_apple fnmode=1
+            '';
+
+		# Firmware Updater
+		services.fwupd.enable = true;
+
+              };
+          # HYPRLAND
+#          programs.hyprland.enable = true;
+#          nix.settings = {
+#            substituters = ["https://hyprland.cachix.org"];
+#            trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+#          };
+
+	system.autoUpgrade = {
+	    enable = true;
+	    flake = self.outPath;
+	    flags = [
+		"--update-input"
+	        "nixpkgs"
+		"-L" # print build logs
+	];
+	    dates = "02:00";
+	    randomizedDelaySec = "45min";
+	};
+        })
+      ];
+      };
       homeConfigurations.coryc = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           inherit system;
