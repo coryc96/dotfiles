@@ -25,12 +25,13 @@
   networkmanagerapplet
   gnome.nautilus
   remmina
+  moonlight-qt
   jq
   libsForQt5.polonium
   xwaylandvideobridge
 #  nwg-look
 #  nwg-displays
-  wlr-randr
+#  wlr-randr
   appimage-run
   xdg-desktop-portal-wlr
   xdg-desktop-portal-gtk
@@ -46,7 +47,6 @@
   partition-manager
   gparted
   keepassxc
-  floorp
   firefox
   beeper
   gnome.cheese
@@ -75,7 +75,7 @@
       jdk19 
     ];
 })
-  gamescope
+  #gamescope
   lutris
   wine-wayland
 
@@ -99,6 +99,15 @@
   
   xdg.desktopEntries = 
     {
+   	  moonlight-lt = {
+		name = "Moonlight-LT";
+		exec = "moonlight stream corywins Laptop -resolution 2256x1504 --fps 60";
+	  };
+   	  moonlight-uw = {
+		name = "Moonlight-UW";
+		exec = "moonlight stream corywins Ultrawide -resolution 3440x1440 --fps 144";
+	  };
+
    #   ferdium = {
    #     name = "Ferdium";
    #     exec = "ferdium --enable-features=UseOzonePlatform --ozone-platform=wayland";

@@ -23,11 +23,11 @@
   xdg.configFile."hypr/hyprpaper.conf".source = ../../configs/hyprland/hyprpaper.conf;
 
   systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
-  wayland.windowManager.hyprland = {
-    enable = true;
-    systemdIntegration = true;
-    xwayland = {
-      enable = true;
-    };
-  };
+  #wayland.windowManager.hyprland = {
+  #  enable = true;
+  #  systemdIntegration = true;
+  #  xwayland = {
+  #    enable = true;
+  #  };
+  #};
 }

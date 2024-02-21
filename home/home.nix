@@ -35,7 +35,7 @@ in
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
-      hm-switch = "nix-channel --update home-manager && home-manager switch --flake /home/coryc/dotfiles/#coryc --impure";
+      hm-switch = "home-manager switch --flake /home/coryc/dotfiles/#coryc --impure";
       k = "kubectl";
     };
     initExtra =  

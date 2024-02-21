@@ -7,7 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      /etc/nixos/hardware-configuration.nix
     ];
 
   # Hardware
@@ -21,6 +21,8 @@
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+  
+  #nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   
   # Bootloader.
@@ -29,8 +31,6 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   
   boot.supportedFilesystems = [ "ntfs" ];
-
-  networking.hostName = "nixpc"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
@@ -71,7 +71,7 @@
   # Enable the KDE Desktop Environment
   #services.xserver.displayManager.lightdm.enable = true;
   #services.xserver.displayManager.sddm.wayland.enable = true;
-  #services.xserver.displayManager.defaultSession = "plasmawayland";
+  services.xserver.displayManager.defaultSession = "plasmawayland";
   services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
