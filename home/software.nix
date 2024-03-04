@@ -23,10 +23,12 @@
   pulseaudio
   pavucontrol
   networkmanagerapplet
-  gnome.nautilus
   remmina
   moonlight-qt
+  parsec-bin
+  powertop
   jq
+  catppuccin-kde
   libsForQt5.polonium
   xwaylandvideobridge
 #  nwg-look
@@ -38,7 +40,7 @@
 #  xdg-desktop-portal-hyprland
 
   # Development
-  rustup
+  #rustup
   helix
   cosmic-edit
 
@@ -47,12 +49,16 @@
   partition-manager
   gparted
   keepassxc
+  floorp
   firefox
   beeper
+  youtube-music
+  cinny-desktop
   gnome.cheese
-  blender
+  #blender
   gimp
-  obs-studio
+  spotify
+  #rustdesk
   virtualbox
   libsForQt5.kdeconnect-kde
   thunderbird
@@ -97,15 +103,20 @@
   discord
   ];
   
+  programs.obs-studio = {
+	enable = true;
+	plugins = with pkgs.obs-studio-plugins; [obs-teleport];
+  };
+
   xdg.desktopEntries = 
     {
    	  moonlight-lt = {
 		name = "Moonlight-LT";
-		exec = "moonlight stream corywins Laptop -resolution 2256x1504 --fps 60";
+		exec = "moonlight stream corywins Laptop --resolution 2256x1504 --fps 60 --no-vsync --bitrate 30000";
 	  };
    	  moonlight-uw = {
 		name = "Moonlight-UW";
-		exec = "moonlight stream corywins Ultrawide -resolution 3440x1440 --fps 144";
+		exec = "moonlight stream corywins Ultrawide --resolution 3440x1440 --fps 144 --no-vsync --bitrate 50000";
 	  };
 
    #   ferdium = {

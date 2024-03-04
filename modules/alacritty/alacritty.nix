@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  xdg.configFile."alacritty/alacritty.yml".source = ../../configs/alacritty/alacritty.yml;
+  xdg.configFile."alacritty/alacritty.toml".source = ../../configs/alacritty/alacritty.toml;
 }
 

@@ -4,6 +4,7 @@
 
   programs.plasma = {
     enable = true;
+
     shortcuts = {
       "Alacritty.desktop"."New" = "Meta+Return";
       "kwin"."ExposeAll" = ["Meta+Space" "Ctrl+F10"];
@@ -59,6 +60,9 @@
 
 
     configFile = {
+      "kcminputrc"."Libinput.2362.628.PIXA3854:00 093A:0274 Touchpad"."ClickMethod" = 2;
+      "kcminputrc"."Libinput.2362.628.PIXA3854:00 093A:0274 Touchpad"."NaturalScroll" = true;
+
       "kscreenlockerrc"."Greeter.Wallpaper.org.kde.image.General"."Image" = "../../assets/space-cowboy.png";
       "kscreenlockerrc"."Greeter.Wallpaper.org.kde.image.General"."PreviewImage" = "../../assets/space-cowboy.png";
       "ksplashrc"."KSplash"."Engine" = "none";

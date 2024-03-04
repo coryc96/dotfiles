@@ -13,19 +13,25 @@
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
 
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprpaper = { url = "github:hyprwm/hyprpaper"; };
+    #hyprland.url = "github:hyprwm/Hyprland";
+    #hyprpaper = { url = "github:hyprwm/hyprpaper"; };
 
     nixpkgs-wayland  = { url = "github:nix-community/nixpkgs-wayland"; };
-    waybar-git = { url = "github:alexays/waybar"; };
+    #waybar-git = { url = "github:alexays/waybar"; };
 
     nix-software-center.url = "github:vlinkz/nix-software-center";
+
+	nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
 
   outputs = { self, nixpkgs, home-manager,
   plasma-manager,
   #hyprland, 
+  nixos-cosmic,
   nixpkgs-wayland, 
   #waybar-git, 
   #hyprpaper, 
@@ -36,56 +42,25 @@
     in {
       
       # Host Configuration
-      nixosConfigurations.nixpc = nixpkgs.lib.nixosSystem {
-        modules = [
-          ./nixos/configuration.nix
-          ./modules/wayland/wayland.nix
-          ./modules/greetd/greetd.nix
-
-      ({ pkgs, config, ... }: {
-
-        boot.initrd.kernelModules = ["amdgpu"];
-
-        services.xserver.videoDrivers = ["amdgpu"];
-        networking.hostName = "nixpc";
-        boot.extraModprobeConfig = ''
-            options hid_apple fnmode=1
-            '';
-            boot.supportedFilesystems = [ "ntfs" ];
-            fileSystems."/mnt/data" =
-              { device = "/dev/disk/by-id/wwn-0x5002538f31518925-part3";
-                fsType = "ntfs3";
-                options = ["rw" "uid=1000" "nofail"];
-              };
-          # HYPRLAND
-#          programs.hyprland.enable = true;
-#          nix.settings = {
-#            substituters = ["https://hyprland.cachix.org"];
-#            trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7rypt+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-#          };
-
-	system.autoUpgrade = {
-	    enable = true;
-	    flake = self.outPath;
-	    flags = [
-		"--update-input"
-	        "nixpkgs"
-		"-L" # print build logs
-	];
-	    dates = "02:00";
-	    randomizedDelaySec = "45min";
-	};
-        })
-      ];
-      };
 
       nixosConfigurations.nixframe = nixpkgs.lib.nixosSystem {
         modules = [
           ./nixos/configuration.nix
+		  /etc/nixos/cachix.nix
+		  #./nixos/cosmic.nix
+		  nixos-cosmic.nixosModules.default
           ./modules/wayland/wayland.nix
-          ./modules/greetd/greetd.nix
+          #./modules/greetd/greetd.nix
+		  {nix.settings = {
+            substituters = [ "https://cosmic.cachix.org/" ];
+            trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+           };}
 
       ({ pkgs, config, ... }: {
+
+
+	 networking.hostName = "nixframe";
+
 
       # Enable swap on luks
       boot.initrd.luks.devices."luks-ad445f29-2dce-436e-bb3c-b2c6e590ef3a".device = "/dev/disk/by-uuid/ad445f29-2dce-436e-bb3c-b2c6e590ef3a";
@@ -97,6 +72,7 @@
       
       #boot.initrd.kernelModules = ["amdgpu"];
 	  boot.kernelParams = ["amdgpu.sg_display=0"];
+      services.xserver.videoDrivers = ["amdgpu"];
 
       services.power-profiles-daemon.enable = true;
 	 
@@ -109,6 +85,15 @@
             options hid_apple fnmode=1
             '';
 
+
+      ##COSMIC
+      services.xserver.desktopManager.cosmic.enable = false;
+      services.xserver.displayManager.cosmic-greeter.enable = false;
+
+	  programs.steam = {
+	  	enable = true;
+		gamescopeSession.enable = true;
+	  };
           # HYPRLAND
           #programs.hyprland.enable = true;
 		  #programs.hyprland.package = hyprland.packages.${pkgs.system}.hyprland;

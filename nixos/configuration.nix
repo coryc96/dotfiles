@@ -70,14 +70,16 @@
 
   # Enable the KDE Desktop Environment
   #services.xserver.displayManager.lightdm.enable = true;
+  #services.xserver.displayManager.sddm.enable = true;
   #services.xserver.displayManager.sddm.wayland.enable = true;
-  services.xserver.displayManager.defaultSession = "plasmawayland";
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.defaultSession = "plasma";
+  services.xserver.desktopManager.plasma6.enable = true;
+
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    xkb.layout = "us";
+    xkb.variant = "";
   };
 
   # Enable CUPS to print documents.
@@ -91,14 +93,25 @@
   #};
   #sound.enable = true;
   #hardware.pulseaudio.enable = false;
+  #security.rtkit.enable = true;
+  #hardware.pulseaudio = {
+  #  enable = true;
+  #  support32Bit = true;
+
+  #  extraConfig = "unload-module module-suspend-on-idle";
+
+  #};
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  hardware.pulseaudio = {
-	enable = true;
-	support32Bit = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+  };  
 
-	extraConfig = "unload-module module-suspend-on-idle";
-
-  };
   #services.pipewire = {
   #  enable = true;
   #  alsa.enable = true;
@@ -152,11 +165,11 @@
   environment.shells = with pkgs; [zsh];
 
   # Steam
-  programs.steam = {
-  enable = false;
-  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-};
+  #programs.steam = {
+  #enable = false;
+  #remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+  #dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+#};
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -167,13 +180,25 @@
     gnome.gnome-disk-utility
     rustc
     just
+	cosmic-bg
+	cosmic-osd
+	cosmic-term
+	cosmic-edit
+	cosmic-randr
+	cosmic-files
+	cosmic-session
+	cosmic-launcher
+	cosmic-protocols
+	cosmic-applibrary
+	cosmic-notifications
+	cosmic-workspaces-epoch
     cosmic-icons
     cosmic-settings
     cosmic-comp
     cosmic-panel
     cosmic-greeter
-    cosmic-osd
     cosmic-applets
+	xdg-desktop-portal-cosmic
     xorg.xrandr
     vulkan-validation-layers
     vulkan-tools
