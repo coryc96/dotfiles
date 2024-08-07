@@ -29,7 +29,6 @@ in
       cosmic-screenshot
       cosmic-settings
       cosmic-settings-daemon
-      cosmic-term
       cosmic-workspaces-epoch
     ];
 

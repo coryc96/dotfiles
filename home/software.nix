@@ -4,59 +4,69 @@
   imports = [
     ../modules/vim/vim.nix
     ../modules/alacritty/alacritty.nix
-	../modules/plasma/plasma.nix
+    ../modules/kitty/kitty.nix
+#	../modules/plasma/plasma.nix
   ];
 
   home.packages = with pkgs; [
 
   # Shell/Terminal/System
   zsh-powerlevel10k
+  kitty
   podman
+  docker
   fira-code-nerdfont
   baobab
   distrobox
   kubectl
+  k9s
   kubernetes-helm-wrapped
+  kubelogin-oidc
+  talosctl
+  argocd
+  gh
+  stern
   # jre8_headless
   openjdk17-bootstrap
   alacritty
   pulseaudio
   pavucontrol
+  mpv
   networkmanagerapplet
   remmina
+  sonobus
   moonlight-qt
-  parsec-bin
   powertop
   jq
   catppuccin-kde
   libsForQt5.polonium
-  xwaylandvideobridge
+  #xwaylandvideobridge
 #  nwg-look
 #  nwg-displays
-#  wlr-randr
-  appimage-run
+  wlr-randr
   xdg-desktop-portal-wlr
   xdg-desktop-portal-gtk
 #  xdg-desktop-portal-hyprland
 
   # Development
-  #rustup
-  helix
+  rustup
   cosmic-edit
+  zed-editor
 
   # Desktop Software
-  gnome.gnome-tweaks
+  gnome-tweaks
   partition-manager
   gparted
   keepassxc
   floorp
+  vivaldi
   firefox
-  beeper
-  youtube-music
-  cinny-desktop
-  gnome.cheese
+  cheese
+  jan
   #blender
   gimp
+  youtube-tui
+  invidtui
   spotify
   #rustdesk
   virtualbox
@@ -70,19 +80,21 @@
   catppuccin-gtk
 
   # Games
+  heroic
+  chiaki
   dolphin-emu
   desmume
-  yuzu
+  protonup-qt
   godot_4
   airshipper
   (prismlauncher.override { 
     jdks = [ 
       jdk8
-      jdk19 
+	  openjdk8-bootstrap
+	  jdk21_headless
     ];
 })
-  #gamescope
-  lutris
+  gamescope
   wine-wayland
 
   # Wayland 
@@ -100,7 +112,7 @@
 
   # Custom Desktop Entries
   ferdium
-  discord
+  vesktop
   ];
   
   programs.obs-studio = {
@@ -116,17 +128,17 @@
 	  };
    	  moonlight-uw = {
 		name = "Moonlight-UW";
-		exec = "moonlight stream corywins Ultrawide --resolution 3440x1440 --fps 144 --no-vsync --bitrate 50000";
+		exec = "moonlight stream corywins Ultrawide --resolution 3440x1440 --fps 144 --no-vsync --bitrate 100000";
 	  };
 
    #   ferdium = {
    #     name = "Ferdium";
    #     exec = "ferdium --enable-features=UseOzonePlatform --ozone-platform=wayland";
    #   };
-      discord = {
-        name = "Discord";
-        exec = "discord --no-sandbox";      
-      };
+     # discord = {
+     #   name = "Discord";
+     #   exec = "discord --no-sandbox";      
+     # };
       #beeper = {
       #  name = "Beeper";
       #  exec = "appimage-run /home/coryc/Downloads/beeper-3.71.16.AppImage";

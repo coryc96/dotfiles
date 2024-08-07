@@ -11,10 +11,9 @@
     ];
 
   # Hardware
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [
     ];
   };
@@ -22,16 +21,11 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   
-  #nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
   
   boot.supportedFilesystems = [ "ntfs" ];
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -64,16 +58,24 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  # Enable Sunshine
+  services.sunshine = {
+    enable = true;
+    autoStart = false;
+    capSysAdmin = true;
+  };
+
+
   # Enable the GNOME Desktop Environment.
-  #services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.enable = false;
   #services.xserver.desktopManager.gnome.enable = true;
 
   # Enable the KDE Desktop Environment
   #services.xserver.displayManager.lightdm.enable = true;
   #services.xserver.displayManager.sddm.enable = true;
-  #services.xserver.displayManager.sddm.wayland.enable = true;
-  services.xserver.displayManager.defaultSession = "plasma";
-  services.xserver.desktopManager.plasma6.enable = true;
+  #services.displayManager.sddm.wayland.enable = true;
+  #services.displayManager.defaultSession = "cosmic-session";
+  services.desktopManager.plasma6.enable = true;
 
 
   # Configure keymap in X11
@@ -85,22 +87,17 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
-  #environment.etc."wireplumber/main.lua.d/90-suspend-timeout.lua" = {
-  #  text = ''
-  #    session.suspend-timeout-seconds = 0
-  #  '';
-  #};
-  #sound.enable = true;
-  #hardware.pulseaudio.enable = false;
-  #security.rtkit.enable = true;
-  #hardware.pulseaudio = {
-  #  enable = true;
-  #  support32Bit = true;
+  services.pipewire.wireplumber.configPackages = [
+	(pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
+		bluez_monitor.properties = {
+			["bluez5.enable-sbc-xq"] = true,
+			["bluez5.enable-msbc"] = true,
+			["bluez5.enable-hw-volume"] = true,
+			["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+		}
+	'')
+];
 
-  #  extraConfig = "unload-module module-suspend-on-idle";
-
-  #};
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -109,20 +106,8 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = false;
   };  
-
-  #services.pipewire = {
-  #  enable = true;
-  #  alsa.enable = true;
-  #  alsa.support32Bit = true;
-  #  pulse.enable = true;
-  #  #wireplumber.enable = true;
-  #  
-  #  # use the example session manager (no others are packaged yet so this is enabled by default,
-  #  # no need to redefine it in your config for now)
-  #  #media-session.enable = true;
-  #};
 
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -164,41 +149,15 @@
   users.defaultUserShell = pkgs.zsh;
   environment.shells = with pkgs; [zsh];
 
-  # Steam
-  #programs.steam = {
-  #enable = false;
-  #remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  #dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-#};
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim 
     wget
     git
-    gnome.gnome-disk-utility
+    gnome-disk-utility
     rustc
     just
-	cosmic-bg
-	cosmic-osd
-	cosmic-term
-	cosmic-edit
-	cosmic-randr
-	cosmic-files
-	cosmic-session
-	cosmic-launcher
-	cosmic-protocols
-	cosmic-applibrary
-	cosmic-notifications
-	cosmic-workspaces-epoch
-    cosmic-icons
-    cosmic-settings
-    cosmic-comp
-    cosmic-panel
-    cosmic-greeter
-    cosmic-applets
-	xdg-desktop-portal-cosmic
     xorg.xrandr
     vulkan-validation-layers
     vulkan-tools
@@ -211,9 +170,10 @@
 
   # Enable the OpenSSH daemon.
    services.openssh.enable = true;
+   services.tailscale.enable = true;
 
   networking.firewall = { 
-      enable = false;
+      enable = true;
       allowedTCPPorts = [ 7777 ];
       allowedUDPPorts = [ 7777 ];
       allowedTCPPortRanges = [ 
@@ -241,8 +201,8 @@
   
   nix.gc = {
     automatic = true;  # Enable the automatic garbage collector
-    dates = "04:00";   # When to run the garbage collector
-    options = "-d";    # Arguments to pass to nix-collect-garbage
+    dates = "weekly";   # When to run the garbage collector
+    options = "--delete-older-than 30d";    # Arguments to pass to nix-collect-garbage
   };
 
 

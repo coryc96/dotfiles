@@ -31,16 +31,24 @@ in
   # ZSH
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
     enableCompletion = true;
+    enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
       hm-switch = "home-manager switch --flake /home/coryc/dotfiles/#coryc --impure";
       k = "kubectl";
-    };
+	  kcn = "kubectl config set-context $(kubectl config current-context) --namespace";
+	};
     initExtra =  
 	''
-source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+VISUAL="nvim"
+EDITOR="$VISUAL"
+TALOSCONFIG=/home/coryc/ChambersLab/talos/talosconfig
+bindkey -v
+bindkey "^A" vi-beginning-of-line
+bindkey "^E" vi-end-of-line
+source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
+source <(talosctl completion zsh)
 	'';
     localVariables = {
       KUBECONFIG="$HOME/Documents/k8s/cerberos.yaml";
@@ -64,15 +72,18 @@ source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
     ];
     oh-my-zsh = {
       enable = true;
-      plugins = ["git"];
+      plugins = ["git"] ;
     };
   };
 
-
+  programs.fzf = {
+  enable = true;
+  enableZshIntegration = true;
+  };
   # Cursor -- Primarily in a TWM
   home.pointerCursor = {
     name = "Adwaita";
-    package = pkgs.gnome.adwaita-icon-theme;
+    package = pkgs.adwaita-icon-theme;
     size = 24;
     x11 = {
       enable = true;
@@ -93,4 +104,12 @@ source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+
+  nix.gc = {
+    automatic = true;  # Enable the automatic garbage collector
+    frequency = "weekly";   # When to run the garbage collector
+    options = "--delete-older-than 30d";    # Arguments to pass to nix-collect-garbage
+  };
+
 }

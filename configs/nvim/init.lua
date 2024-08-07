@@ -86,12 +86,6 @@ vim.opt.path:append '**'
 vim.o.wildmenu = true
 vim.o.wildmode = 'longest,list'
 
--- Better file compatibility
-vim.o.nocompatible = true
-vim.o.syntax = true
-vim.o.noendofline = true
-
-
 -- Makes pretty
 vim.o.termguicolors = true
 vim.cmd.colorscheme "catppuccin"

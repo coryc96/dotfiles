@@ -3,7 +3,7 @@
 {
 
   programs.plasma = {
-    enable = true;
+    enable = false;
 
     shortcuts = {
       "Alacritty.desktop"."New" = "Meta+Return";
@@ -60,11 +60,10 @@
 
 
     configFile = {
+	  "kdeglobals"."KDE"."SingleClick" = true;
       "kcminputrc"."Libinput.2362.628.PIXA3854:00 093A:0274 Touchpad"."ClickMethod" = 2;
       "kcminputrc"."Libinput.2362.628.PIXA3854:00 093A:0274 Touchpad"."NaturalScroll" = true;
 
-      "kscreenlockerrc"."Greeter.Wallpaper.org.kde.image.General"."Image" = "../../assets/space-cowboy.png";
-      "kscreenlockerrc"."Greeter.Wallpaper.org.kde.image.General"."PreviewImage" = "../../assets/space-cowboy.png";
       "ksplashrc"."KSplash"."Engine" = "none";
       "kwalletrc"."Wallet"."First Use" = false;
       "kwinrc"."Desktops"."Number" = 3;
@@ -111,7 +110,6 @@
       "kwinrulesrc"."9bcb3a01-ac24-413b-95b3-a41e4d513efe"."wmclassmatch" = 1;
       "kwinrulesrc"."General"."count" = 2;
       "kwinrulesrc"."General"."rules" = "1,2";
-      "plasmarc"."Wallpapers"."usersWallpapers" = "/home/coryc/dotfiles/assets/stag-wallpaper-uw.jpg";
       "systemsettingsrc"."KFileDialog Settings"."detailViewIconSize" = 16;
     };
   };
