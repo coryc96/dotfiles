@@ -22,16 +22,19 @@
   k9s
   kubernetes-helm-wrapped
   kubelogin-oidc
+  omnictl
   talosctl
   argocd
   gh
   stern
+  inetutils
   # jre8_headless
   openjdk17-bootstrap
   alacritty
   pulseaudio
   pavucontrol
   mpv
+  waydroid
   networkmanagerapplet
   remmina
   sonobus
@@ -39,7 +42,6 @@
   powertop
   jq
   catppuccin-kde
-  libsForQt5.polonium
   #xwaylandvideobridge
 #  nwg-look
 #  nwg-displays
@@ -55,23 +57,20 @@
 
   # Desktop Software
   gnome-tweaks
-  partition-manager
+  gnome-keyring
   gparted
-  keepassxc
-  floorp
   vivaldi
   firefox
   cheese
   jan
+  deluge
   #blender
   gimp
   youtube-tui
   invidtui
   spotify
   #rustdesk
-  virtualbox
   libsForQt5.kdeconnect-kde
-  thunderbird
   tdesktop
   p7zip
   shotwell
@@ -80,10 +79,10 @@
   catppuccin-gtk
 
   # Games
-  heroic
+  #lutris-unwrapped
+  #xboxdrv
   chiaki
   dolphin-emu
-  desmume
   protonup-qt
   godot_4
   airshipper
@@ -99,12 +98,9 @@
 
   # Wayland 
   rofi-wayland
-  swaynotificationcenter
   grim
   slurp
   pango
-  swayidle
-  swaylock-effects
   wl-clipboard
   wofi
   wdisplays
@@ -124,11 +120,11 @@
     {
    	  moonlight-lt = {
 		name = "Moonlight-LT";
-		exec = "moonlight stream corywins Laptop --resolution 2256x1504 --fps 60 --no-vsync --bitrate 30000";
+		exec = "moonlight stream cloudpc Laptop --display-mode fullscreen --resolution 2256x1504 --fps 60 --no-vsync --bitrate 30000";
 	  };
    	  moonlight-uw = {
 		name = "Moonlight-UW";
-		exec = "moonlight stream corywins Ultrawide --resolution 3440x1440 --fps 144 --no-vsync --bitrate 100000";
+		exec = "moonlight stream cloudpc Ultrawide --display-mode fullscreen --resolution 3440x1440 --fps 144 --no-vsync --bitrate 100000";
 	  };
 
    #   ferdium = {

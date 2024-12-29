@@ -27,6 +27,12 @@
   
   boot.supportedFilesystems = [ "ntfs" ];
 
+  # Enable Virtualization
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.guest.enable = true;
+  virtualisation.virtualbox.guest.draganddrop = true;
+  users.extraGroups.vboxusers.members = [ "coryc" ];
+  
   # Enable networking
   networking.networkmanager.enable = true;
   
@@ -50,10 +56,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # SwayLock PAM Auth
-  security.pam.services.swaylock = {
-        text = "auth include login";
-  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -68,6 +70,7 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = false;
+
   #services.xserver.desktopManager.gnome.enable = true;
 
   # Enable the KDE Desktop Environment
@@ -75,7 +78,7 @@
   #services.xserver.displayManager.sddm.enable = true;
   #services.displayManager.sddm.wayland.enable = true;
   #services.displayManager.defaultSession = "cosmic-session";
-  services.desktopManager.plasma6.enable = true;
+  #services.desktopManager.plasma6.enable = true;
 
 
   # Configure keymap in X11
@@ -173,7 +176,7 @@
    services.tailscale.enable = true;
 
   networking.firewall = { 
-      enable = true;
+      enable = false;
       allowedTCPPorts = [ 7777 ];
       allowedUDPPorts = [ 7777 ];
       allowedTCPPortRanges = [ 
@@ -199,9 +202,10 @@
 
   ## Garbage Collector
   
+  nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;  # Enable the automatic garbage collector
-    dates = "weekly";   # When to run the garbage collector
+    dates = "daily";   # When to run the garbage collector
     options = "--delete-older-than 30d";    # Arguments to pass to nix-collect-garbage
   };
 

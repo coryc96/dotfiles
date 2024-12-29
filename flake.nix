@@ -21,6 +21,12 @@
       url = "github:lilyinstarlight/nixos-cosmic";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+     
+	 ghostty.url = "github:ghostty-org/ghostty";
+	zen-browser.url = "github:fufexan/zen-browser-flake";
+	onelauncher.url = "github:JuneStepp/OneLauncher";
+	audiorelay.url = "github:JamesReynolds/audiorelay-flake";
+
 
   };
 
@@ -28,6 +34,10 @@
   #plasma-manager,
   nixos-cosmic,
   nixpkgs-wayland, 
+  zen-browser,
+  ghostty,
+  onelauncher,
+#  audiorelay,
   nix-software-center, ... }:
     let
       system = "x86_64-linux";
@@ -62,7 +72,6 @@
 	  boot.kernelParams = ["amdgpu.sg_display=0" "rtc_cmos.use_acpi_alarm=1"];
       services.xserver.videoDrivers = ["amdgpu"];
 
-	  services.ddccontrol.enable = true;
 
       services.power-profiles-daemon.enable = true;
 	 
@@ -122,8 +131,11 @@
 
 
               home.packages = with pkgs; [
-                nixpkgs-wayland.packages.${system}.swww
-                nix-software-center.packages.${system}.nix-software-center
+				zen-browser.packages."${system}".default
+				onelauncher.packages."${system}".default
+				ghostty.packages."${system}".default
+				#nixpkgs-wayland.packages.${system}.swww
+                #nix-software-center.packages.${system}.nix-software-center
               ];
             };
           })];
