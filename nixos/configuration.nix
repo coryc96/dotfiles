@@ -28,9 +28,9 @@
   boot.supportedFilesystems = [ "ntfs" ];
 
   # Enable Virtualization
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.guest.enable = true;
-  virtualisation.virtualbox.guest.draganddrop = true;
+  virtualisation.virtualbox.host.enable = false;
+  virtualisation.virtualbox.guest.enable = false;
+  #virtualisation.virtualbox.guest.draganddrop = false;
   users.extraGroups.vboxusers.members = [ "coryc" ];
   
   # Enable networking
@@ -61,11 +61,11 @@
   services.xserver.enable = true;
 
   # Enable Sunshine
-  services.sunshine = {
-    enable = true;
-    autoStart = false;
-    capSysAdmin = true;
-  };
+ # services.sunshine = {
+ #   enable = true;
+ #   autoStart = false;
+ #   capSysAdmin = true;
+ # };
 
 
   # Enable the GNOME Desktop Environment.
@@ -101,7 +101,7 @@
 	'')
 ];
 
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
