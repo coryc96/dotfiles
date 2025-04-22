@@ -13,6 +13,7 @@
   home.packages = with pkgs; [
 
   # Shell/Terminal/System
+  uwsm
   zsh-powerlevel10k
   podman
   docker
