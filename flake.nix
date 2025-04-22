@@ -9,13 +9,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #plasma-manager.url = "github:pjones/plasma-manager";
-    #plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
-    #plasma-manager.inputs.home-manager.follows = "home-manager";
-
-    nixpkgs-wayland = {
-      url = "github:nix-community/nixpkgs-wayland";
-    };
+    #nixpkgs-wayland = {
+    #  url = "github:nix-community/nixpkgs-wayland";
+    #};
 
     nix-software-center.url = "github:vlinkz/nix-software-center";
 
@@ -23,11 +19,23 @@
       url = "github:lilyinstarlight/nixos-cosmic";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+	 walker = {
+      url = "github:abenz1267/walker";
+      # Optional: Follow nixpkgs if walker needs it (usually good practice)
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ghostty.url = "github:ghostty-org/ghostty";
-    zen-browser.url = "github:fufexan/zen-browser-flake";
-    onelauncher.url = "github:JuneStepp/OneLauncher";
-    audiorelay.url = "github:JamesReynolds/audiorelay-flake";
+	sherlock.url = "github:Skxxtz/sherlock";
+	zed = {
+	  url = "github:zed-industries/zed";
+	  inputs.nixpkgs.follows = "nixpkgs";
+	};
+
+	nix-ld = {
+		url = "github:Mic92/nix-ld";
+		inputs.nixpkgs.follows = "nixpkgs";
+		};
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
   };
 
@@ -36,13 +44,14 @@
       self,
       nixpkgs,
       home-manager,
-      #plasma-manager,
       nixos-cosmic,
-      nixpkgs-wayland,
+      #nixpkgs-wayland,
       zen-browser,
+	  walker,
       ghostty,
-      onelauncher,
-      #  audiorelay,
+	  sherlock,
+	  zed,
+	  nix-ld,
       nix-software-center,
       ...
     }:
@@ -52,7 +61,7 @@
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (_: true);
-        overlays = [ nixpkgs-wayland.overlay ];
+        #overlays = [ nixpkgs-wayland.overlay ];
       };
     in
     {
@@ -64,12 +73,23 @@
           ./nixos/configuration.nix
           #./nixos/cosmic.nix
           nixos-cosmic.nixosModules.default
+		  nix-ld.nixosModules.nix-ld
           ./modules/wayland/wayland.nix
           #./modules/greetd/greetd.nix
           {
             nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+              substituters = [
+				"https://cache.nixos.org/" # Standard cache
+     			"https://cosmic.cachix.org/"
+				"https://zed-industries.cachix.org"
+				"https://walker-git.cachix.org"
+	  ];
+              trusted-public-keys = [ 
+			    "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" # Standard cache key
+      			"cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
+      			"zed-industries.cachix.org-1:QW3RoXK0Lm4ycmU5/3bmYRd3MLf4RbTGPqRulGlX5W0="
+			    "walker-git.cachix.org-1:vmC0ocfPWh0S/vRAQGtChuiZBTAe4wiKDeyyXM0/7pM="
+	  		  ];
             };
           }
 
@@ -83,12 +103,15 @@
                 "amdgpu.sg_display=0"
                 "rtc_cmos.use_acpi_alarm=1"
               ];
+			  boot.initrd.kernelModules = [ "amdgpu" ];
               services.xserver.videoDrivers = [ "amdgpu" ];
-
+              hardware.graphics.enable = true;
               services.power-profiles-daemon.enable = true;
 
               # For fingerprint support
               services.fprintd.enable = true;
+
+			  services.pcscd.enable = true;
 
               # Firmware Updater
               services.fwupd.enable = true;
@@ -99,6 +122,8 @@
               ##COSMIC
               services.desktopManager.cosmic.enable = true;
               services.displayManager.cosmic-greeter.enable = true;
+
+			  programs.nix-ld.dev.enable = true;
 
               programs.steam = {
                 enable = true;
@@ -135,21 +160,23 @@
         modules = [
           ./home/home.nix
           ./home/software.nix
+		  walker.homeManagerModules.default
+
           #plasma-manager.homeManagerModules.plasma-manager
           (
             { pkgs, config, ... }:
             {
               config = {
                 # use it as an overlay
-                nixpkgs.overlays = [ nixpkgs-wayland.overlay ];
+                #nixpkgs.overlays = [ nixpkgs-wayland.overlay ];
 
-                home.packages = with pkgs; [
-                  zen-browser.packages."${system}".default
-                  onelauncher.packages."${system}".default
-                  ghostty.packages."${system}".default
-                  #nixpkgs-wayland.packages.${system}.swww
-                  #nix-software-center.packages.${system}.nix-software-center
+                home.packages = [
+                  zen-browser.packages."${pkgs.system}".default
+                  ghostty.packages."${pkgs.system}".default
+				  zed.packages."${pkgs.system}".default
+				  sherlock.packages."${pkgs.system}".default
                 ];
+
               };
             }
           )
@@ -159,5 +186,3 @@
       };
     };
 }
-
-

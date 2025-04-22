@@ -120,6 +120,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox
+	  nerd-fonts.fira-code
     #  thunderbird
     ];
   };
@@ -165,7 +166,6 @@
     vulkan-validation-layers
     vulkan-tools
     xdg-utils # for opening default programs when clicking links
-    ffmpeg-full
   ];
 
 
@@ -196,7 +196,7 @@
   system.stateVersion = "22.11"; # Did you read the comment?
 
   ## Kernel Version
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   ## Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

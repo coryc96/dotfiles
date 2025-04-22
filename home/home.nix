@@ -20,61 +20,29 @@ in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
+
+  imports = [
+  ];
+
   home.username = "coryc";
   home.homeDirectory = "/home/coryc";
 
   home.packages = with pkgs; [
-    glib
-    configure-gtk
+
   ];
 
-  # NuShell
+  fonts.fontconfig.enable = true;
+
   programs.starship = { enable = true;
        settings = {
          add_newline = true;
-         character = { 
+         character = {
          success_symbol = "[➜](bold green)";
          error_symbol = "[➜](bold red)";
         };
       };
 	};
-  programs.carapace = { enable = true;
-	enableNushellIntegration = true;
-  };
-  programs.nushell = { enable = false;
-		extraConfig = ''
-		  let carapace_completer = {|spans|
-          carapace $spans.0 nushell $spans | from json
-          }
-          $env.config = {
-           show_banner: false,
-           completions: {
-           case_sensitive: false # case-sensitive completions
-           quick: true    # set to false to prevent auto-selecting completions
-           partial: true    # set to false to prevent partial filling of the prompt
-           algorithm: "fuzzy"    # prefix or fuzzy
-           external: {
-           # set to false to prevent nushell looking into $env.PATH to find more suggestions
-               enable: true 
-           # set to lower can improve completion performance at the cost of omitting some options
-               max_results: 100 
-               completer: $carapace_completer # check 'carapace_completer' 
-             }
-           }
-          } 
-          $env.PATH = ($env.PATH | 
-          split row (char esep) |
-          prepend /home/myuser/.apps |
-          append /usr/bin/env
-          )
-          '';
 
-      shellAliases = {
-        hm-switch = "home-manager switch --flake /home/coryc/dotfiles/#coryc --impure";
-        k = "kubectl";
-	    kcn = "kubectl config set-context $(kubectl config current-context) --namespace";
-	  };
-	};
 
   # ZSH
   programs.zsh = {
@@ -87,15 +55,17 @@ in
       k = "kubectl";
 	  kcn = "kubectl config set-context $(kubectl config current-context) --namespace";
 	};
-    initExtra =  
+    initExtra =
 	''
 VISUAL="nvim"
 EDITOR="$VISUAL"
 TALOSCONFIG=/home/coryc/ChambersLab/talos/talosconfig
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 bindkey -v
 bindkey "^A" vi-beginning-of-line
 bindkey "^E" vi-end-of-line
 source <(talosctl completion zsh)
+eval "$(starship init zsh)"
 	'';
     localVariables = {
       KUBECONFIG="$HOME/Documents/k8s/cerberos.yaml";
@@ -106,16 +76,16 @@ source <(talosctl completion zsh)
       path = "${config.xdg.dataHome}/zsh/history";
     };
     plugins = [
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
-      {
-        name = "powerlevel10k-config";
-        src = ../configs/zsh/powerlevel10k-config;
-        file = ".p10k.zsh";
-      }  
+     # {
+     #   name = "powerlevel10k";
+     #   src = pkgs.zsh-powerlevel10k;
+     #   file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+     # }
+     # {
+     #   name = "powerlevel10k-config";
+     #   src = ../configs/zsh/powerlevel10k-config;
+     #   file = ".p10k.zsh";
+     # }
     ];
     oh-my-zsh = {
       enable = true;
