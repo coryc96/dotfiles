@@ -6,7 +6,7 @@
     ../modules/alacritty/alacritty.nix
     ../modules/kitty/kitty.nix
     ../modules/starship/starship.nix
-    ../modules/walker/walker.nix
+#    ../modules/walker/walker.nix
 #	../modules/plasma/plasma.nix
   ];
 
@@ -32,7 +32,6 @@
   gh
   stern
   inetutils
-  opensc
   # jre8_headless
   openjdk17-bootstrap
   pulseaudio
@@ -40,6 +39,7 @@
   remmina
   sonobus
   moonlight-qt
+  libsForQt5.qt5.qtbase
   powertop
   jq
   xdg-desktop-portal-wlr
@@ -56,7 +56,6 @@
   gparted
   vivaldi
   firefox
-  vesktop
   thunderbird
   beeper
   jan
@@ -67,7 +66,7 @@
   #zed-editor
 
   # Games
-  #lutris-unwrapped
+  lutris
   #xboxdrv
   airshipper
   (prismlauncher.override {
@@ -76,14 +75,16 @@
 	  openjdk8-bootstrap
 	  jdk21_headless
 	  temurin-jre-bin
+	  temurin-jre-bin-8
     ];
 })
   gamescope
   wine-wayland
+  wlr-randr
 
   # Custom Desktop Entries
   ferdium
-  vesktop
+  #vesktop
   ];
 
   programs.obs-studio = {

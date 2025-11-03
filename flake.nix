@@ -15,26 +15,21 @@
 
     nix-software-center.url = "github:vlinkz/nix-software-center";
 
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-	 walker = {
-      url = "github:abenz1267/walker";
-      # Optional: Follow nixpkgs if walker needs it (usually good practice)
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+#    nixos-cosmic = {
+#      url = "github:lilyinstarlight/nixos-cosmic";
+#      inputs.nixpkgs.follows = "nixpkgs";
+#    };
+#	 walker = {
+#      url = "github:abenz1267/walker";
+#      # Optional: Follow nixpkgs if walker needs it (usually good practice)
+#      inputs.nixpkgs.follows = "nixpkgs";
+#    };
     ghostty.url = "github:ghostty-org/ghostty";
-	sherlock.url = "github:Skxxtz/sherlock";
 	zed = {
 	  url = "github:zed-industries/zed";
 	  inputs.nixpkgs.follows = "nixpkgs";
 	};
 
-	nix-ld = {
-		url = "github:Mic92/nix-ld";
-		inputs.nixpkgs.follows = "nixpkgs";
-		};
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
   };
@@ -44,14 +39,12 @@
       self,
       nixpkgs,
       home-manager,
-      nixos-cosmic,
+#      nixos-cosmic,
       #nixpkgs-wayland,
       zen-browser,
-	  walker,
+	  #walker,
       ghostty,
-	  sherlock,
 	  zed,
-	  nix-ld,
       nix-software-center,
       ...
     }:
@@ -72,23 +65,22 @@
         modules = [
           ./nixos/configuration.nix
           #./nixos/cosmic.nix
-          nixos-cosmic.nixosModules.default
-		  nix-ld.nixosModules.nix-ld
+#          nixos-cosmic.nixosModules.default
           ./modules/wayland/wayland.nix
           #./modules/greetd/greetd.nix
           {
             nix.settings = {
               substituters = [
 				"https://cache.nixos.org/" # Standard cache
-     			"https://cosmic.cachix.org/"
+#     			"https://cosmic.cachix.org/"
 				"https://zed-industries.cachix.org"
-				"https://walker-git.cachix.org"
+#				"https://walker.cachix.org"
 	  ];
-              trusted-public-keys = [ 
+              trusted-public-keys = [
 			    "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" # Standard cache key
-      			"cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
+#      			"cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
       			"zed-industries.cachix.org-1:QW3RoXK0Lm4ycmU5/3bmYRd3MLf4RbTGPqRulGlX5W0="
-			    "walker-git.cachix.org-1:vmC0ocfPWh0S/vRAQGtChuiZBTAe4wiKDeyyXM0/7pM="
+		#	    "walker.cachix.org-1:fG8q+uAaMqhsMxWjwvk0IMb4mFPFLqHjuvfwQxE4oJM="
 	  		  ];
             };
           }
@@ -96,7 +88,7 @@
           (
             { pkgs, config, ... }:
             {
-
+		      programs.nix-ld.enable = true;
               networking.hostName = "nixframe";
 
               boot.kernelParams = [
@@ -121,9 +113,9 @@
 
               ##COSMIC
               services.desktopManager.cosmic.enable = true;
-              services.displayManager.cosmic-greeter.enable = true;
-
-			  programs.nix-ld.dev.enable = true;
+			  services.displayManager.cosmic-greeter.enable = true;
+              services.gnome.gnome-keyring.enable = true;
+#              security.pam.services.cosmic-greeter.enableGnomeKeyring = true;
 
               programs.steam = {
                 enable = true;
@@ -160,7 +152,7 @@
         modules = [
           ./home/home.nix
           ./home/software.nix
-		  walker.homeManagerModules.default
+		  #walker.homeManagerModules.default
 
           #plasma-manager.homeManagerModules.plasma-manager
           (
@@ -174,7 +166,6 @@
                   zen-browser.packages."${pkgs.system}".default
                   ghostty.packages."${pkgs.system}".default
 				  zed.packages."${pkgs.system}".default
-				  sherlock.packages."${pkgs.system}".default
                 ];
 
               };

@@ -71,7 +71,7 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = false;
 
-  #services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.gnome.enable = false;
 
   # Enable the KDE Desktop Environment
   #services.xserver.displayManager.lightdm.enable = true;
