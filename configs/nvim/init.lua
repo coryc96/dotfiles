@@ -1,134 +1,148 @@
---> LazyVim Bootstrap
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
+-- Set's leader to 'space' // This must be first
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
--- Set Map Leader
-vim.g.mapleader = "\\" -- Make sure to set `mapleader` before lazy so your mappings are correct
+-- Set to true if you have a Nerd Font installed and selected in the terminal
+vim.g.have_nerd_font = false
 
--- List of Plugins (needs the requires below as well)
-plugins = {
-{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+-- Make line numbers default
+vim.o.number = true
 
-{ "nvim-tree/nvim-web-devicons" },
+-- Enable mouse mode
+vim.o.mouse = 'a'
 
-{ 'echasnovski/mini.surround', version = false },
-{ 'echasnovski/mini.pairs', version = false },
-{ 'echasnovski/mini.files', version = false },
-{ 'echasnovski/mini.pick', version = false },
-{ 'echasnovski/mini.extra', version = false },
-{ 'echasnovski/mini.completion', version = false }
---{ 'stevearc/oil.nvim' }
+-- Indenting
+vim.o.smartindent = true -- Insert indents automatically
+vim.o.expandtab = true -- Use spaces instead of tabs
+vim.o.shiftwidth = 2 -- Size of an indent
+vim.o.tabstop = 2 -- Number of spaces tabs count for
+vim.o.softtabstop = 2 -- Number of spaces a tab counts for while editing
+
+-- Set's the mode in the status line
+vim.o.showmode = true
+
+-- Enable break indent
+vim.o.breakindent = true
+
+-- Enable undo/redo changes even after closing and reopening a file
+-- vim.o.undofile = true
+
+-- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+-- Keep signcolumn on by default
+vim.o.signcolumn = 'yes'
+
+-- Decrease update time
+vim.o.updatetime = 250
+
+-- Decrease mapped sequence wait time
+vim.o.timeoutlen = 300
+
+-- Configure how new splits should be opened
+vim.o.splitright = true
+vim.o.splitbelow = true
+
+-- Controls whether special characters are made visible in the editor.
+vim.o.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
+-- Preview substitutions live, as you type
+vim.o.inccommand = 'split'
+
+-- Show which line your cursor is on
+vim.o.cursorline = true
+
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.o.scrolloff = 10
+
+-- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
+-- instead raise a dialog asking if you wish to save the current file(s)
+vim.o.confirm = true
+
+-- Diagnostic Config & Keymaps
+vim.diagnostic.config {
+  update_in_insert = false,
+  severity_sort = true,
+  float = { border = 'rounded', source = 'if_many' },
+  underline = { severity = { min = vim.diagnostic.severity.WARN } },
+
+  -- Can switch between these as you prefer
+  virtual_text = true, -- Text shows up at the end of the line
+  virtual_lines = false, -- Text shows up underneath the line, with virtual lines
+
+  -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+  jump = { float = true },
 }
 
-require("lazy").setup(plugins, opts) -- Bootstraps lazy.nvim itself
+-- Highlight when yanking text
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking text',
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+  callback = function() vim.hl.on_yank() end,
+})
 
-require("nvim-web-devicons").setup()
+-- [[ Install `lazy.nvim` plugin manager ]]
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+  if vim.v.shell_error ~= 0 then error('Error cloning lazy.nvim:\n' .. out) end
+end
 
-require("mini.surround").setup() -- Enables commands manipulation of surrounding characters ("sa", "sd", etc)
-require("mini.pairs").setup() -- Enables auto-pair creation
-require("mini.files").setup() -- Enables the mini.files explorer
-require("mini.pick").setup() -- Enables fuzzy search (telescope-esque)
-require("mini.extra").setup() -- Provides extra pickers for mini.pick
-require("mini.completion").setup() -- Provides lsp completion
---require("oil").setup()
+---@type vim.Option
+local rtp = vim.opt.rtp
+rtp:prepend(lazypath)
 
--- Add hybrid line numbers
-vim.o.number = true
-vim.o.relativenumber = true
+-- Load keymaps file
+require 'config.keymaps'
 
--- Word highlighting modifiers
-vim.o.cursorline = true -- Highlights entire line with cursor present
-vim.o.ic = true -- Ignores case on searches
-vim.o.hlsearch = false -- Unhighlights text after search is done (enter)
+-- Install plugins
+require('lazy').setup({
 
--- Sets mouse mode
-vim.o.mouse = 'a'
-vim.api.nvim_set_keymap(
-  "", "<RightDrag>", "<LeftDrag>",
-  { noremap }
-)
-vim.api.nvim_set_keymap(
-  "", "<RightMouse>", "<LeftMouse>",
-  { noremap }
-)
-vim.api.nvim_set_keymap(
-  "", "<LeftMouse>", "<nop>",
-  { noremap }
-)
+  { -- Shows keybinds
+    'folke/which-key.nvim',
+    event = 'VimEnter',
+    ---@module 'which-key'
+    ---@type wk.Opts
+    ---@diagnostic disable-next-line: missing-fields
+    opts = {
+      -- delay between pressing a key and opening which-key (milliseconds)
+      preset = 'modern',
+      delay = 0,
+      icons = { mappings = vim.g.have_nerd_font },
 
+      -- Document existing key chains
+      spec = {
+        { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
+        { '<leader>t', group = '[T]oggle' },
+        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { 'gr', group = 'LSP Actions', mode = { 'n' } },
+      },
+    },
+  },
 
--- Sets full clipboard
-vim.o.clipboard=unnamedplus
-
--- Uses spaces for shift
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.smarttab = true
-
--- Sets up autocomplete
-vim.o.completeopt = 'longest,menuone,preview,noinsert'
-
--- Allows recursive file-finding
-vim.opt.path:append '**'
-
-
--- Enable better autocomplete lists
-vim.o.wildmenu = true
-vim.o.wildmode = 'longest,list'
-
--- Makes pretty
-vim.o.termguicolors = true
-vim.cmd.colorscheme "catppuccin"
-
--- ## BINDINGS ## --
---
--- Enables TAB and SHIFT+TAB for autocomplete navigation
-vim.api.nvim_set_keymap(
-  "i", "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'",
-  { noremap, expr = true }
-)
-
-vim.api.nvim_set_keymap(
-  "i", "<S-Tab>", "pumvisible() ? '<C-p>' : '<Tab>'",
-  { noremap, expr = true }
-)
---
---
-
--- Open File Explorer
-vim.api.nvim_set_keymap(
-  "n", "<C-e>", ":lua MiniFiles.open()<CR>",
-  { noremap }
-)
-
---
--- Sets up fuzzy finder bindings
--- -- Fuzzy find files
-vim.api.nvim_set_keymap(
-  "n", "<Leader>f", ":Pick files<CR>",
-  { noremap }
-)
--- -- Fuzzy find buffers
-vim.api.nvim_set_keymap(
-  "n", "<Leader>b", ":Pick buffers<CR>",
-  { noremap }
-)
---
---
-
--- Yanks into system clipboard
-vim.api.nvim_set_keymap(
-  "v", "<C-y>", ":'<,'>w !wl-copy<CR><CR>",
-  { noremap }
-)
-
+  { import = 'plugins' },
+  --
+}, { ---@diagnostic disable-line: missing-fields
+  ui = {
+    -- If you are using a Nerd Font: set icons to an empty table which will use the
+    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
+    },
+  },
+})
