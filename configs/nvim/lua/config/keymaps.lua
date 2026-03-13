@@ -3,12 +3,13 @@
 local map = vim.keymap.set
 
 -- General
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+map('n', '<Esc>', '<cmd>nohlsearch<CR>')
+map("n", "<leader>e", function() require('mini.files').open() end, { desc = "File Explorer" })
 -- Yank into system clipboard
-vim.keymap.set('v', '<leader>y', [["+y]], { desc = 'Yank to system clipboard' })
+map('v', '<leader>y', [["+y]], { desc = 'Yank to system clipboard' })
 
 -- LSP
-vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, { desc = '[F]ormat buffer' })
+map('n', '<leader>ff', vim.lsp.buf.format, { desc = '[F]ormat buffer' })
 
 -- Diagnostic Jump Logic
 local diagnostic_goto = function(next, severity)
@@ -28,12 +29,14 @@ map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
 map('n', ']w', diagnostic_goto(true, 'WARN'), { desc = 'Next Warning' })
 map('n', '[w', diagnostic_goto(false, 'WARN'), { desc = 'Prev Warning' })
 
--- Terminal Mode Fixes
+-- Terminal
 map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 map('t', '<C-h>', '<C-\\><C-n><C-w>h', { desc = 'Go to left window' })
 map('t', '<C-j>', '<C-\\><C-n><C-w>j', { desc = 'Go to lower window' })
 map('t', '<C-k>', '<C-\\><C-n><C-w>k', { desc = 'Go to upper window' })
 map('t', '<C-l>', '<C-\\><C-n><C-w>l', { desc = 'Go to right window' })
+
+map({ "n", "t" }, "<leader>tt", function() Snacks.terminal.toggle(nil, { cwd = Snacks.git.get_root() }) end, { desc = "Toggle Terminal (CWD)" })
 
 -- Modern Window Management
 map('n', '<C-h>', '<C-w>h', { desc = 'Go to Left Window', remap = true })

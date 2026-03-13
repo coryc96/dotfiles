@@ -19,7 +19,10 @@ vim.o.tabstop = 2 -- Number of spaces tabs count for
 vim.o.softtabstop = 2 -- Number of spaces a tab counts for while editing
 
 -- Set's the mode in the status line
-vim.o.showmode = true
+vim.o.showmode = false
+
+-- Set the ruler show state
+vim.opt.ruler = false
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -122,10 +125,10 @@ require('lazy').setup({
       },
     },
   },
-
   { import = 'plugins' },
   --
-}, { ---@diagnostic disable-line: missing-fields
+},
+{ ---@diagnostic disable-line: missing-fields
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
